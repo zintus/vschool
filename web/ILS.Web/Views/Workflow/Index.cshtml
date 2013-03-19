@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Редактор последовательностей прохождения курсов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ils.workflow.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jointJS/joint.all.min.js")"></script>
+
+    <script type="text/javascript">
+        Ext.onReady(function () 
+        {
+            wwin.show();
+        });
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "3Ducation | Виртуальный мир";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
+    <script type="text/javascript">
+        getUnityImage = '@Url.Content("~/Content/pics_service/UnitySetup.png")';
+        link_unityfile = '@Url.Content("~/UnityDeploy/Main.unity3d")';
+        link_unityRPG = '@Url.Action("UnityRPG", "Render")';
+        link_unitylist = '@Url.Action("UnityList", "Render")';
+        link_unitydata = '@Url.Action("UnityData", "Render")';
+        link_unitystat = '@Url.Action("UnityStat", "Render")';
+        link_unitysave = '@Url.Action("UnitySave", "Render")';
+        link_unitysaveRPG = '@Url.Action("UnitySaveRPG", "Render")';
+        link_unitytest = '@Url.Action("UnityTest", "Render")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/render.js")"></script>
+}
+

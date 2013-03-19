@@ -1,0 +1,28 @@
+﻿1) Правой кнопкой по ILS.Web -> Publish... -> Publish Method: FTP
+Target Location: ftp://u273630.ftp.masterhost.ru/vschool.it.cx/www/
+(наш FTPшник, в нем папка с именем домена, в нем папка www, куда грузятся все файлы)
+Replace matching files with local copies
+Passive Mode: off
+
+2) http://masterhost.ru/support/doc/windows/ftp/
+Проверка и корректировка загруженного - через Far Manager
+
+3) Соединение с базой:
+<connectionStrings>
+  <add name="default"
+       connectionString="Server=u273630.mssql.masterhost.ru;Database=u273630;User ID=u273630;Password=inguan6ionumm"
+       providerName="System.Data.SqlClient" />
+</connectionStrings>
+
+Не забыть переименовать базу в ILSContext.cs:
+public ILSContext() : base("u273630") { }
+
+Соединиться с базой мастерхоста через SQL Management Studio и ручками обновить все таблицы.
+
+4) MIME-тип для Юнити - дописать в Web.config:
+<system.webServer>
+    <staticContent>
+      <!-- для корректного распознавания Unity-файлов на сервере хостинга -->
+      <mimeMap fileExtension=".unity3d" mimeType="application/vnd.unity" />
+    </staticContent>
+</system.webServer>
