@@ -23,15 +23,15 @@ public class JoysticksBehaviour : MonoBehaviour {
 	void Update () 
 	{
 		if (targetCamera)
-		{			
-			targetCamera.x -= leftJoystick.position.x * 4;
-			targetCamera.y += leftJoystick.position.y * 4;
+		{
+            targetCamera.x -= rightJoystick.position.x * 4;
+            targetCamera.y += rightJoystick.position.y * 4;
 		}
 		
 		if (tpc)
 		{
-			tpc.HorizontalAxis = rightJoystick.position.x;
-			tpc.VerticalAxis = rightJoystick.position.y;
+			tpc.HorizontalAxis = leftJoystick.position.x;
+			tpc.VerticalAxis = leftJoystick.position.y;
 		}
 		
 		if (tpc != null && targetCamera != null)

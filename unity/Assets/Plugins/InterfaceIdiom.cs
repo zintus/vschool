@@ -44,8 +44,10 @@ public class InterfaceIdiom
 			break;
 		}
 		
+#if UNITY_IPHONE || UNITY_ANDROID
 		//WARN: dbg string
 		Current = Values.Phone;
+#endif
 		
 		Debug.Log(string.Format("Decided that we are on {0}", Current));
 	}
