@@ -12,7 +12,8 @@ namespace ILS.Domain
 		public string PasswordHash { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }		
+        public string Email { get; set; }
+        public bool IsApproved { get; set; }
 
         public int EXP { get; set; }
         public bool FacultyStands_Seen { get; set; }        public bool FacultyStands_Finish { get; set; }        public bool HistoryStand_Seen { get; set; }        public bool HistoryStand_Finish { get; set; }        public bool ScienceStand_Seen { get; set; }        public bool ScienceStand_Finish { get; set; }        public bool StaffStand_Seen { get; set; }
