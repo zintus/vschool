@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Зарегистрированные пользователи";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+@section scripts{
+    <script type="text/javascript">
+
+        Ext.ns('ils', 'ils.admin');
+
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ils.openid.js")"></script>
+}
