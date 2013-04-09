@@ -4,11 +4,14 @@
 }
 @section scripts{
     <script type="text/javascript">
+
         Ext.ns('ils', 'ils.admin');
+
         ils.admin.readUser = '@Url.Action("ReadUser", "Admin")';
         ils.admin.updateUser = '@Url.Action("UpdateUser", "Admin")';
         ils.admin.deleteUser = '@Url.Action("DeleteUser", "Admin")';
         ils.admin.createUser = '@Url.Action("CreateUser", "Admin")';
+
     </script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/ils.admin.js")"> </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ils.admin.js")"></script>
 }

@@ -91,9 +91,10 @@ namespace ILS.Controllers
 		}
 
         [HttpPost]
-        public ActionResult Register(string username, string password, string firstname, string lastname, string email)
+        public JsonResult Register(string username, string password, string firstname, string lastname, string email)
         {
-            if (context.User.Count(x => x.Name == username) > 0) return Json(new { success = false });
+            int count = context.User.Count(x => x.Name == username); 
+            if (count > 0) return Json(new { success = false });
             context.User.Add(new User()
             {
                 Name = username,
