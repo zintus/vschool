@@ -44,8 +44,8 @@ namespace ILS.Domain
 			#region Informatics
 			var course1 = new Course() { Name = "Информатика", Diagramm = ILSContextInitializer.DefaultDiagramm }; context.Course.Add(course1);            
             var theme1 = new Theme() { OrderNumber = 1, Name = "Подготовка к ЕГЭ" }; course1.Themes.Add(theme1);
-            var lec1 = new ThemeContent() { OrderNumber = 1, Name = "Лекционный материал 1", Type = "lecture" }; theme1.ThemeContents.Add(lec1);
-            var lec2 = new ThemeContent() { OrderNumber = 2, Name = "Лекционный материал 2", Type = "lecture" }; theme1.ThemeContents.Add(lec2);
+            var lec1 = new Lecture() { OrderNumber = 1, Name = "Лекционный материал 1"}; theme1.ThemeContents.Add(lec1);
+            var lec2 = new Lecture() { OrderNumber = 2, Name = "Лекционный материал 2"}; theme1.ThemeContents.Add(lec2);
 
             lec1.Paragraphs.Add(new Paragraph() { OrderNumber = 1, Header = "1.1 Системы счисления", Text = "Система счисления — символический метод записи чисел, представление чисел с помощью письменных знаков. Cистема счисления дает представления множества чисел (целых и/или вещественных), дает каждому числу уникальное представление (или, по крайней мере, стандартное представление), отражает алгебраическую и арифметическую структуру чисел. Системы счисления подразделяются на позиционные, непозиционные и смешанные. Чем больше основание системы счисления, тем меньшее количество разрядов (то есть записываемых цифр) требуется при записи числа в позиционных системах счисления." });
             lec1.Paragraphs.Add(new Paragraph() { OrderNumber = 2, Header = "1.2 Кодирование информации", Text = "Тут следует длинная строчка, вместившая в себе весь параграф 1.2" });
@@ -86,13 +86,13 @@ namespace ILS.Domain
             lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 2, Header = "Параграф 2", Text = "Текст параграфа 2" });
             lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 3, Header = "Параграф 3", Text = "Текст параграфа 3" });
             lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 4, Header = "Параграф 4", Text = "Текст параграфа 4" });
-            lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 5, Header = "Параграф 5", Text = "Текст параграфа 5" });           
+            lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 5, Header = "Параграф 5", Text = "Текст параграфа 5" });          
                         
             //======================================================================================================================
             //======================================== ЕГЭ ДЕМО 2009 --- 9 ВОПРОСОВ ================================================
             //======================================================================================================================            
 
-            var ege2009 = new ThemeContent() { OrderNumber = 3, Name = "ЕГЭ демо 2009", Type = "test", MinResult = 5 };
+            var ege2009 = new Test() { OrderNumber = 3, Name = "ЕГЭ демо 2009", MinResult = 5 };
             theme1.ThemeContents.Add(ege2009);
 
             var ege2009_q = new Question() {
@@ -190,7 +190,7 @@ namespace ILS.Domain
             //======================================== ЕГЭ ДЕМО 2010 --- 6 ВОПРОСОВ ================================================
             //======================================================================================================================            
 
-            var ege2010 = new ThemeContent() { OrderNumber = 4, Name = "ЕГЭ демо 2010", Type = "test", MinResult = 3 };
+            var ege2010 = new Test() { OrderNumber = 4, Name = "ЕГЭ демо 2010", MinResult = 3 };
             theme1.ThemeContents.Add(ege2010);
             
             var ege2010_q = new Question() {
@@ -258,7 +258,7 @@ namespace ILS.Domain
             //======================================== ЕГЭ ДЕМО 2011 --- 15 ВОПРОСОВ ===============================================
             //======================================================================================================================            
 
-            var ege2011 = new ThemeContent() { OrderNumber = 5, Name = "ЕГЭ демо 2011", Type = "test", MinResult = 8 };
+            var ege2011 = new Test() { OrderNumber = 5, Name = "ЕГЭ демо 2011", MinResult = 8 };
             theme1.ThemeContents.Add(ege2011);
             
             var ege2011_q = new Question() {
@@ -415,8 +415,8 @@ namespace ILS.Domain
             #region Informatics ENG
             var ecourse1 = new Course() { Name = "Information Science", Diagramm = ILSContextInitializer.DefaultDiagramm }; context.Course.Add(ecourse1);
             var etheme1 = new Theme() { OrderNumber = 1, Name = "Exam preparation" }; ecourse1.Themes.Add(etheme1);
-            var elec1 = new ThemeContent() { OrderNumber = 1, Name = "Lecturing material 1", Type = "lecture" }; etheme1.ThemeContents.Add(elec1);
-            var elec2 = new ThemeContent() { OrderNumber = 2, Name = "Lecturing material 2", Type = "lecture" }; etheme1.ThemeContents.Add(elec2);
+            var elec1 = new Lecture() { OrderNumber = 1, Name = "Lecturing material 1"}; etheme1.ThemeContents.Add(elec1);
+            var elec2 = new Lecture() { OrderNumber = 2, Name = "Lecturing material 2"}; etheme1.ThemeContents.Add(elec2);
 
             elec1.Paragraphs.Add(new Paragraph() { OrderNumber = 1, Header = "1.1 Number systems", Text = "A numeral system (or system of numeration) is a writing system for expressing numbers, that is a mathematical notation for representing numbers of a given set, using graphemes or symbols in a consistent manner. It can be seen as the context that allows the symbols '11' to be interpreted as the binary symbol for three, the decimal symbol for eleven, or a symbol for other numbers in different bases." });
             elec1.Paragraphs.Add(new Paragraph() { OrderNumber = 2, Header = "1.2 Data encryption", Text = "Here comes a single but truly long line that encompasses all paragraph 1.2" });
@@ -463,7 +463,7 @@ namespace ILS.Domain
             //======================================== ЕГЭ ДЕМО 2009 --- 9 ВОПРОСОВ ================================================
             //======================================================================================================================            
 
-            var eege2009 = new ThemeContent() { OrderNumber = 3, Name = "Exam demo 2009", Type = "test", MinResult = 5 };
+            var eege2009 = new Test() { OrderNumber = 3, Name = "Exam demo 2009", MinResult = 5 };
             etheme1.ThemeContents.Add(eege2009);
 
             var eege2009_q = new Question()

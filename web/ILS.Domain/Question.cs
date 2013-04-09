@@ -13,9 +13,9 @@ namespace ILS.Domain
         public string PicQ { get; set; }
         public bool IfPictured { get; set; }
         public string PicA { get; set; }
-        [ForeignKey("ThemeContent")] public Guid ThemeContent_Id { get; set; }
+        [ForeignKey("Test")] public Guid Test_Id { get; set; }
 
-        public virtual ThemeContent ThemeContent { get; set; }
+        public virtual Test Test { get; set; }
         public virtual ICollection<AnswerVariant> AnswerVariants { get; set; }
 
         public Question()

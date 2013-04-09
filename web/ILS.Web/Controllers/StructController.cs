@@ -234,7 +234,7 @@ namespace ILS.Web.Controllers
 			{
 				//уровень тем - возвращаем список лекций и тестов
                 return Json(theme.ThemeContents.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
-					iconCls = (x.Type == "lecture") ? "lecture" : "test",
+                    iconCls = (x is Lecture) ? "lecture" : "test",
 					id = x.Id.ToString(),
 					text = x.Name
 				}), JsonRequestBehavior.AllowGet);
@@ -242,10 +242,11 @@ namespace ILS.Web.Controllers
             var tc = context.ThemeContent.Find(guid);
             if (tc != null)
             {
-                if (tc.Type == "lecture")
+                if (tc is Lecture)
                 {
                     //уровень лекций - возвращаем список параграфов
-                    return Json(tc.Paragraphs.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
+                    Lecture lec = (Lecture)tc;
+                    return Json(lec.Paragraphs.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
                         iconCls = "paragraph",
                         id = x.Id.ToString(),
                         text = x.Header,
@@ -255,7 +256,8 @@ namespace ILS.Web.Controllers
                 else
                 {
                     //уровень тестов - возвращаем список вопросов
-                    return Json(tc.Questions.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
+                    Test test = (Test)tc;
+                    return Json(test.Questions.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
                         iconCls = "question",
                         id = x.Id.ToString(),
                         text = "Вопрос №" + x.OrderNumber,
@@ -289,7 +291,7 @@ namespace ILS.Web.Controllers
             {
                 var tc = context.ThemeContent.Find(id);
                 return Json(new { success = true, data = new {
-                    id = tc.Id, name = tc.Name, type = tc.Type, ordernumber = tc.OrderNumber
+                    id = tc.Id, name = tc.Name, type = (tc is Lecture) ? "lecture" : "test", ordernumber = tc.OrderNumber
                 } }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -337,9 +339,9 @@ namespace ILS.Web.Controllers
             p.Text = text;
 
             string path = "";
-            path += "/Course_" + p.ThemeContent.Theme.Course_Id.ToString();
-            path += "/Theme_" + p.ThemeContent.Theme_Id.ToString();
-            path += "/Lecture_" + p.ThemeContent_Id.ToString();
+            path += "/Course_" + p.Lecture.Theme.Course_Id.ToString();
+            path += "/Theme_" + p.Lecture.Theme_Id.ToString();
+            path += "/Lecture_" + p.Lecture_Id.ToString();
             path += "/Paragraph_" + p.Id.ToString();
             string physpath = Server.MapPath("~/Content/pics_base") + path;
             string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveParagraph", "") + "/Content/pics_base" + path;
@@ -415,9 +417,9 @@ namespace ILS.Web.Controllers
             if (picq_file != null)
             {
                 string path = "";
-                path += "/Course_" + q.ThemeContent.Theme.Course_Id.ToString();
-                path += "/Theme_" + q.ThemeContent.Theme_Id.ToString();
-                path += "/Test_" + q.ThemeContent_Id.ToString();
+                path += "/Course_" + q.Test.Theme.Course_Id.ToString();
+                path += "/Theme_" + q.Test.Theme_Id.ToString();
+                path += "/Test_" + q.Test_Id.ToString();
                 string physpath = Server.MapPath("~/Content/pics_base") + path;
                 string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveQuestion","") + "/Content/pics_base" + path;
                 if (!Directory.Exists(physpath)) Directory.CreateDirectory(physpath);
@@ -450,9 +452,9 @@ namespace ILS.Web.Controllers
                 if (pica_file != null)
                 {
                     string path = "";
-                    path += "/Course_" + q.ThemeContent.Theme.Course_Id.ToString();
-                    path += "/Theme_" + q.ThemeContent.Theme_Id.ToString();
-                    path += "/Test_" + q.ThemeContent_Id.ToString();
+                    path += "/Course_" + q.Test.Theme.Course_Id.ToString();
+                    path += "/Theme_" + q.Test.Theme_Id.ToString();
+                    path += "/Test_" + q.Test_Id.ToString();
                     string physpath = Server.MapPath("~/Content/pics_base") + path;
                     string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveQuestion", "") + "/Content/pics_base" + path;
                     if (!Directory.Exists(physpath)) Directory.CreateDirectory(physpath);
@@ -530,7 +532,7 @@ namespace ILS.Web.Controllers
             int num;
             if (t.ThemeContents.Count == 0) num = 1;
             else num = t.ThemeContents.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
-            var tc = new ThemeContent { OrderNumber = num, Name = "Новая лекция", Type = "lecture" };
+            var tc = new Lecture { OrderNumber = num, Name = "Новая лекция"};
             t.ThemeContents.Add(tc);
             context.SaveChanges();
             return tc.Id;            
@@ -542,7 +544,7 @@ namespace ILS.Web.Controllers
             int num;
             if (t.ThemeContents.Count == 0) num = 1;
             else num = t.ThemeContents.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
-            var tc = new ThemeContent { OrderNumber = num, Name = "Новый тест", Type = "test" };
+            var tc = new Test { OrderNumber = num, Name = "Новый тест"};
             t.ThemeContents.Add(tc);
             context.SaveChanges();
             return tc.Id;
@@ -555,7 +557,7 @@ namespace ILS.Web.Controllers
             string path = Server.MapPath("~/Content/pics_base");
             path += "/Course_" + tc.Theme.Course_Id.ToString();
             path += "/Theme_" + tc.Theme_Id.ToString();
-            if (tc.Type == "lecture") path += "/Lecture_"; else path += "/Test_";
+            if (tc is Lecture) path += "/Lecture_"; else path += "/Test_";
             path += tc.Id.ToString();             
             if (Directory.Exists(path)) Directory.Delete(path, true);
 
@@ -574,7 +576,7 @@ namespace ILS.Web.Controllers
 
         public Guid AddParagraph(Guid parent_id)
         {
-            var l = context.ThemeContent.Find(parent_id);
+            Lecture l = (Lecture)context.ThemeContent.Find(parent_id);
             int num;
             if (l.Paragraphs.Count == 0) num = 1;
             else num = l.Paragraphs.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
@@ -589,9 +591,9 @@ namespace ILS.Web.Controllers
             Paragraph p = context.Paragraph.Find(id);
 
             string path = Server.MapPath("~/Content/pics_base");
-            path += "/Course_" + p.ThemeContent.Theme.Course_Id.ToString();
-            path += "/Theme_" + p.ThemeContent.Theme_Id.ToString();
-            path += "/Lecture_" + p.ThemeContent_Id.ToString();
+            path += "/Course_" + p.Lecture.Theme.Course_Id.ToString();
+            path += "/Theme_" + p.Lecture.Theme_Id.ToString();
+            path += "/Lecture_" + p.Lecture_Id.ToString();
             path += "/Paragraph_" + p.Id.ToString();
             if (Directory.Exists(path)) Directory.Delete(path, true);
 
@@ -599,7 +601,7 @@ namespace ILS.Web.Controllers
             context_obj.SaveChanges();
 
             int i = 1;
-            foreach (var x in context.ThemeContent.Find(parent_id).Paragraphs.OrderBy(x => x.OrderNumber))
+            foreach (var x in ((Lecture)context.ThemeContent.Find(parent_id)).Paragraphs.OrderBy(x => x.OrderNumber))
             {
                 x.OrderNumber = i;
                 i++;
@@ -610,7 +612,7 @@ namespace ILS.Web.Controllers
 
         public Guid AddQuestion(Guid parent_id)
         {
-            var t = context.ThemeContent.Find(parent_id);
+            Test t = (Test)context.ThemeContent.Find(parent_id);
             int num;
             if (t.Questions.Count == 0) num = 1;
             else num = t.Questions.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
@@ -637,7 +639,7 @@ namespace ILS.Web.Controllers
             context_obj.SaveChanges();
 
             int i = 1;
-            foreach (var x in context.ThemeContent.Find(parent_id).Paragraphs.OrderBy(x => x.OrderNumber))
+            foreach (var x in ((Lecture)context.ThemeContent.Find(parent_id)).Paragraphs.OrderBy(x => x.OrderNumber))
             {
                 x.OrderNumber = i;
                 i++;
@@ -684,7 +686,7 @@ namespace ILS.Web.Controllers
                 if (num > 1)
                 {
                     var parent = context.ThemeContent.Find(parent_id);
-                    var prev_one = parent.Paragraphs.Where(x => x.OrderNumber == num - 1).First();
+                    var prev_one = ((Lecture)parent).Paragraphs.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
                     prev_one.OrderNumber = num;                    
                 }
@@ -696,7 +698,7 @@ namespace ILS.Web.Controllers
                 if (num > 1)
                 {
                     var parent = context.ThemeContent.Find(parent_id);
-                    var prev_one = parent.Questions.Where(x => x.OrderNumber == num - 1).First();
+                    var prev_one = ((Test)parent).Questions.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
                     prev_one.OrderNumber = num;                    
                 }
@@ -738,10 +740,10 @@ namespace ILS.Web.Controllers
                 var this_one = context.Paragraph.Find(id);
                 var parent = context.ThemeContent.Find(parent_id);
                 int num = this_one.OrderNumber;
-                int num_max = parent.Paragraphs.OrderBy(x => x.OrderNumber).Last().OrderNumber;
+                int num_max = ((Lecture)parent).Paragraphs.OrderBy(x => x.OrderNumber).Last().OrderNumber;
                 if (num < num_max)
                 {
-                    var next_one = parent.Paragraphs.First(x => x.OrderNumber == num + 1);
+                    var next_one = ((Lecture)parent).Paragraphs.First(x => x.OrderNumber == num + 1);
                     this_one.OrderNumber = num + 1;
                     next_one.OrderNumber = num;                    
                 }
@@ -751,10 +753,10 @@ namespace ILS.Web.Controllers
                 var this_one = context.Question.Find(id);
                 var parent = context.ThemeContent.Find(parent_id);
                 int num = this_one.OrderNumber;
-                int num_max = parent.Questions.OrderBy(x => x.OrderNumber).Last().OrderNumber;
+                int num_max = ((Test)parent).Questions.OrderBy(x => x.OrderNumber).Last().OrderNumber;
                 if (num < num_max)
                 {
-                    var next_one = parent.Questions.First(x => x.OrderNumber == num + 1);
+                    var next_one = ((Test)parent).Questions.First(x => x.OrderNumber == num + 1);
                     this_one.OrderNumber = num + 1;
                     next_one.OrderNumber = num;                    
                 }

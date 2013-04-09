@@ -10,10 +10,10 @@ namespace ILS.Domain
     {
         public double TimeSpent { get; set; }
         [ForeignKey("ThemeRun")] public Guid ThemeRun_Id { get; set; }
-        [ForeignKey("ThemeContent")] public Guid? ThemeContent_Id { get; set; }
+        [ForeignKey("Lecture")] public Guid? Lecture_Id { get; set; }
 
         public virtual ThemeRun ThemeRun { get; set; }
-        public virtual ThemeContent ThemeContent { get; set; }
+        public virtual Lecture Lecture { get; set; }
         public virtual ICollection<ParagraphRun> ParagraphsRuns { get; set; }
 
         public LectureRun()

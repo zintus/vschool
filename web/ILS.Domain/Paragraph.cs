@@ -11,9 +11,9 @@ namespace ILS.Domain
         public int OrderNumber { get; set; }
         public string Header { get; set; }
         public string Text { get; set; }
-        [ForeignKey("ThemeContent")] public Guid ThemeContent_Id { get; set; }
+        [ForeignKey("Lecture")] public Guid Lecture_Id { get; set; }
 
-        public virtual ThemeContent ThemeContent { get; set; }
+        public virtual Lecture Lecture { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
 
         public Paragraph()
