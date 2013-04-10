@@ -37,20 +37,12 @@ function parseURLParams(url) {
 ils.openid.bigButton = Ext.create('Ext.Button', {
     text: 'Click me',
     handler: function() {
-		/*Ext.Ajax.request({
-			url: 'http://localhost:8080/ILS/OpenID',    // where you wanna post
-			success: function(response, opts) {
-				var a = eval('(' + response.responseText + ')');
-			    alert(a.data);
-		    },
-			jsonData: [{ 
-					'foo': 'bar'
-				}, {
-					'foo': 'bar2'
-				}
-			]  // your json data
-		});*/
-		document.location.href = "http://localhost/vschool/?url=http://localhost:8080/ILS/OpenID";
+		if (document.location.href.indexOf("http://") == -1) {
+			document.location.href = "http://www.ischool-ssau.ru/Account/LogOn/?extUrl=" + document.location.href;
+		}
+		else {
+			document.location.href = "http://www.ischool-ssau.ru/Account/LogOn/?extUrl=" + document.location.href.slice(7);
+		}
         
     }
 });
@@ -72,7 +64,7 @@ Ext.onReady(function(){
 	var urlParams = parseURLParams(document.URL);
 	if (urlParams != null && urlParams['login'] != null && urlParams['hash'] != null && urlParams['firstName'] != null && urlParams['lastName'] != null && urlParams['email'] != null) {
 		Ext.Ajax.request({
-				url: 'http://localhost:8080/ILS/OpenID',    
+				url: document.location.href.slice(0, document.location.href.indexOf("?")),    
 				success: function(response, opts) {
 					var a = eval('(' + response.responseText + ')');
 				},
