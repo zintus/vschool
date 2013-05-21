@@ -313,7 +313,8 @@ public class ThirdPersonController : MonoBehaviour
 	}
 
 	void Update() {
-		
+	if(networkView.isMine)
+		{
 		if (!isControllable)
 		{
 			// kill all inputs if not controllable.
@@ -409,6 +410,7 @@ public class ThirdPersonController : MonoBehaviour
 				jumping = false;
 				SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
 			}
+		}
 		}
 	}
 
