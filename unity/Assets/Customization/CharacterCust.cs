@@ -4,6 +4,7 @@ using System.Collections;
 public class CharacterCust : MonoBehaviour
 {
 	//avatars
+	public static string nameOfAvatar;
 	public GameObject Lerpz;
 	public GameObject Worker;
 	public GameObject AngryBot;
@@ -80,9 +81,12 @@ public class CharacterCust : MonoBehaviour
 				case 6 : { avatar = AngryBot; break; }
 				case 9 : { avatar = massChar[curCharacter]; break; }					
 			}
-			avatar.transform.parent = null;
-			avatar.transform.position = new Vector3(-31.3F, 2F, -29.7F);
-			DontDestroyOnLoad(avatar);
+			//avatar.transform.parent = null;
+			//avatar.transform.position = new Vector3(-31.3F, 2F, -29.7F);
+			
+			nameOfAvatar = avatar.name;
+			Debug.Log(nameOfAvatar);
+			//DontDestroyOnLoad(avatar);
 			Application.LoadLevel("world");
 		}
         if (GUILayout.Button(">", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)))

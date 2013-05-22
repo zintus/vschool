@@ -38,23 +38,29 @@ namespace ILS.Web.Controllers
         public ActionResult UnityData(Guid id)
         {
             var c = context.Course.Find(id);
-            return Json(new { 
+            return Json(new
+            {
                 name = c.Name,
-                themes = c.Themes.OrderBy(x => x.OrderNumber).Select(x => new {
+                themes = c.Themes.OrderBy(x => x.OrderNumber).Select(x => new
+                {
                     name = x.Name,
-                    contents = x.ThemeContents.OrderBy(y => y.OrderNumber).Select(y => new {
+                    contents = x.ThemeContents.OrderBy(y => y.OrderNumber).Select(y => new
+                    {
                         id = y.Id,
                         name = y.Name,
-                        type = y.Type,
-                        paragraphs = y.Paragraphs.OrderBy(z => z.OrderNumber).Select(z => new {
+                        type = (y is Lecture) ? "lecture" : "test",
+                        paragraphs = (y is Lecture) ? ((Lecture)y).Paragraphs.OrderBy(z => z.OrderNumber).Select(z => new
+                        {
                             orderNumber = z.OrderNumber,
                             header = z.Header,
                             text = z.Text,
-                            pictures = z.Pictures.OrderBy(u => u.OrderNumber).Select(u => new {
+                            pictures = z.Pictures.OrderBy(u => u.OrderNumber).Select(u => new
+                            {
                                 path = u.Path
                             })
-                        }),
-                        questions = y.Questions.OrderBy(v => v.OrderNumber).Select(v => new {
+                        }) : null,
+                        questions = (y is Test) ? ((Test)y).Questions.OrderBy(v => v.OrderNumber).Select(v => new
+                        {
                             text = v.Text,
                             picQ = v.PicQ,
                             if_pictured = v.IfPictured,
@@ -64,7 +70,7 @@ namespace ILS.Web.Controllers
                             {
                                 text = w.OrderNumber + ") " + w.Text
                             })
-                        })
+                        }) : null
                     })
                 })
             });
@@ -80,8 +86,28 @@ namespace ILS.Web.Controllers
                     ifGuest = ifGuest,
                     username = (ifGuest) ? "" : u.Name,
                     EXP = (ifGuest) ? 0 : u.EXP,
-                    facultyStands_Seen = (ifGuest) ? false : u.FacultyStands_Seen,                    facultyStands_Finish = (ifGuest) ? false : u.FacultyStands_Finish,                    historyStand_Seen = (ifGuest) ? false : u.HistoryStand_Seen,                    historyStand_Finish = (ifGuest) ? false : u.HistoryStand_Finish,                    scienceStand_Seen = (ifGuest) ? false : u.ScienceStand_Seen,                    scienceStand_Finish = (ifGuest) ? false : u.ScienceStand_Finish,                    staffStand_Seen = (ifGuest) ? false : u.StaffStand_Seen,                    staffStand_Finish = (ifGuest) ? false : u.StaffStand_Finish,
-                    logotypeJump = (ifGuest) ? false : u.LogotypeJump,                    tableJump = (ifGuest) ? false : u.TableJump,                    terminalJump = (ifGuest) ? false : u.TerminalJump,                    ladderJump_First = (ifGuest) ? false : u.LadderJump_First,                    ladderJump_All = (ifGuest) ? false : u.LadderJump_All,                    letThereBeLight = (ifGuest) ? false : u.LetThereBeLight,                    plantJump_First = (ifGuest) ? false : u.PlantJump_First,                    plantJump_Second = (ifGuest) ? false : u.PlantJump_Second,                    barrelRoll = (ifGuest) ? false : u.BarrelRoll,                    firstVisitLecture = (ifGuest) ? false : u.FirstVisitLecture,                    firstVisitTest = (ifGuest) ? false : u.FirstVisitTest,                    teleportations = (ifGuest) ? 0 : u.Teleportations,                    paragraphsSeen = (ifGuest) ? 0 : u.ParagraphsSeen,                    testsFinished = (ifGuest) ? 0 : u.TestsFinished
+                    facultyStands_Seen = (ifGuest) ? false : u.FacultyStands_Seen,
+                    facultyStands_Finish = (ifGuest) ? false : u.FacultyStands_Finish,
+                    historyStand_Seen = (ifGuest) ? false : u.HistoryStand_Seen,
+                    historyStand_Finish = (ifGuest) ? false : u.HistoryStand_Finish,
+                    scienceStand_Seen = (ifGuest) ? false : u.ScienceStand_Seen,
+                    scienceStand_Finish = (ifGuest) ? false : u.ScienceStand_Finish,
+                    staffStand_Seen = (ifGuest) ? false : u.StaffStand_Seen,
+                    staffStand_Finish = (ifGuest) ? false : u.StaffStand_Finish,
+                    logotypeJump = (ifGuest) ? false : u.LogotypeJump,
+                    tableJump = (ifGuest) ? false : u.TableJump,
+                    terminalJump = (ifGuest) ? false : u.TerminalJump,
+                    ladderJump_First = (ifGuest) ? false : u.LadderJump_First,
+                    ladderJump_All = (ifGuest) ? false : u.LadderJump_All,
+                    letThereBeLight = (ifGuest) ? false : u.LetThereBeLight,
+                    plantJump_First = (ifGuest) ? false : u.PlantJump_First,
+                    plantJump_Second = (ifGuest) ? false : u.PlantJump_Second,
+                    barrelRoll = (ifGuest) ? false : u.BarrelRoll,
+                    firstVisitLecture = (ifGuest) ? false : u.FirstVisitLecture,
+                    firstVisitTest = (ifGuest) ? false : u.FirstVisitTest,
+                    teleportations = (ifGuest) ? 0 : u.Teleportations,
+                    paragraphsSeen = (ifGuest) ? 0 : u.ParagraphsSeen,
+                    testsFinished = (ifGuest) ? 0 : u.TestsFinished
                 });
             }
         }
@@ -103,18 +129,18 @@ namespace ILS.Web.Controllers
                         name = x.Name,
                         progress = 0.0,
                         testsComplete = 0,
-                        testsOverall = x.ThemeContents.Count(v => v.Type == "test"),
+                        testsOverall = x.ThemeContents.Count(v => v is Test),
                         timeSpent = 0.0,
                         allLectures = false,
                         allTests = false,
                         allTestsMax = false,
                         completeAll = false,
-                        testsRuns = x.ThemeContents.OrderBy(y => y.OrderNumber).Where(y => y.Type == "test").Select(y => new {
+                        testsRuns = x.ThemeContents.OfType<Test>().OrderBy(y => y.OrderNumber).Select(y => new {
                             answersMinimum = y.MinResult,
                             answersCorrect = 0,
                             answersOverall = y.Questions.Count
                         }),
-                        lecturesRuns = x.ThemeContents.OrderBy(z => z.OrderNumber).Where(z => z.Type == "lecture").Select(z => new {
+                        lecturesRuns = x.ThemeContents.OfType<Lecture>().OrderBy(z => z.OrderNumber).Select(z => new {
                             timeSpent = 0.0,
                             paragraphsRuns = z.Paragraphs.Select(u => new {
                                 haveSeen = false
@@ -139,9 +165,9 @@ namespace ILS.Web.Controllers
                             AllLectures = false, AllTests = false, AllTestsMax = false, CompleteAll = false
                         };
                         cr.ThemesRuns.Add(tr);
-                        foreach (var tc in t.ThemeContents.OrderBy(x => x.OrderNumber).Where(x => x.Type == "lecture"))
+                        foreach (var tc in t.ThemeContents.OfType<Lecture>().OrderBy(x => x.OrderNumber))
                         {
-                            LectureRun lr = new LectureRun() { ThemeContent = tc, ThemeRun = tr, TimeSpent = 0.0 };
+                            LectureRun lr = new LectureRun() { Lecture = tc, ThemeRun = tr, TimeSpent = 0.0 };
                             tr.LecturesRuns.Add(lr);
                             foreach (var p in tc.Paragraphs.OrderBy(x => x.OrderNumber))
                             {
@@ -167,18 +193,19 @@ namespace ILS.Web.Controllers
                         name = x.Theme.Name,
                         progress = x.Progress,
                         testsComplete = x.TestsComplete,
-                        testsOverall = x.Theme.ThemeContents.Count(v => v.Type == "test"),
+                        testsOverall = x.Theme.ThemeContents.Count(v => v is Test),
                         timeSpent = x.TimeSpent,
                         allLectures = x.AllLectures,
                         allTests = x.AllTests,
                         allTestsMax = x.AllTestsMax,
                         completeAll = x.CompleteAll,
-                        testsRuns = x.Theme.ThemeContents.OrderBy(y => y.OrderNumber).Where(y => y.Type == "test").Select(y => new {
+                        testsRuns = x.Theme.ThemeContents.OfType<Test>().OrderBy(y => y.OrderNumber).Select(y => new {
                             answersMinimum = y.MinResult,
-                            answersCorrect = (x.TestsRuns.Count(w => w.ThemeContent == y) == 0) ? 0 : x.TestsRuns.Where(w => w.ThemeContent == y).OrderByDescending(w => w.Result).First().Result,
+                            answersCorrect = (x.TestsRuns.Count(w => w.Test == y) == 0) ? 0 : x.TestsRuns.Where(w => w.Test == y).OrderByDescending(w => w.Result).First().Result,
                             answersOverall = y.Questions.Count
                         }),
-                        lecturesRuns = x.LecturesRuns.OrderBy(z => z.ThemeContent.OrderNumber).Select(z => new {
+                        lecturesRuns = x.LecturesRuns.OrderBy(z => z.Lecture.OrderNumber).Select(z => new
+                        {
                             timeSpent = z.TimeSpent,
                             paragraphsRuns = z.ParagraphsRuns.OrderBy(q => q.Paragraph.OrderNumber).Select(q => new {
                                 haveSeen = q.HaveSeen
@@ -231,7 +258,7 @@ namespace ILS.Web.Controllers
                 theme_run.AllTestsMax = obj["themesRuns"][i]["allTestsMax"];
                 theme_run.CompleteAll = obj["themesRuns"][i]["completeAll"];
                 int j = 0;
-                foreach (LectureRun lec_run in theme_run.LecturesRuns.OrderBy(y => y.ThemeContent.OrderNumber)) 
+                foreach (LectureRun lec_run in theme_run.LecturesRuns.OrderBy(y => y.Lecture.OrderNumber)) 
                 {
                     lec_run.TimeSpent = (double) obj["themesRuns"][i]["lecturesRuns"][j]["timeSpent"];
                     int k = 0;
@@ -257,7 +284,7 @@ namespace ILS.Web.Controllers
             {
                 TestRun TR = new TestRun { Result = 0 };
                 ThemeRun theme_run = context.ThemeRun.Find(theme_run_id);
-                ThemeContent test = context.ThemeContent.Find(test_id);
+                Test test = (Test)context.ThemeContent.Find(test_id);
                 theme_run.TestsRuns.Add(TR); test.TestRuns.Add(TR);
 
                 int i = 0; bool correct = true;
@@ -279,7 +306,7 @@ namespace ILS.Web.Controllers
             }
             else
             {
-                ThemeContent test = context.ThemeContent.Find(test_id);
+                Test test = (Test)context.ThemeContent.Find(test_id);
                 int res = 0; int i = 0; bool correct = true;
                 foreach (var q in test.Questions.OrderBy(x => x.OrderNumber))
                 {
