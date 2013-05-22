@@ -34,6 +34,7 @@ var vpConfig = {
                 },
                 '-',
                 { xtype: 'button', id: 'regButton', handler: function () { window.location.href = link_register; } },
+				{ xtype: 'button', id: 'openidButton', handler: function () { window.location.href = link_openid; } },
                 //{ xtype: 'button', id: 'profileButton' },
 				{ xtype: 'button', id: 'logButton' }
 		    ]
@@ -130,6 +131,7 @@ Ext.onReady(function () {
         if (ifAdmin.toLowerCase() == 'true') Ext.getCmp('btn5').setText('Пользователи');
         else Ext.getCmp('btn5').getEl().hide();
         Ext.getCmp('regButton').setText('Регистрация');
+		
         //Ext.getCmp('profileButton').setText('Профиль');
     } else {
         document.title = '3Ducation';
@@ -148,27 +150,32 @@ Ext.onReady(function () {
         Ext.getCmp('regButton').setText('Register');
         //Ext.getCmp('profileButton').setText('Profile');
     }
-
+	Ext.getCmp('openidButton').setText('OpenID');
+	
     var lb = Ext.getCmp('logButton');
     if ((ifLogged.toLowerCase() == 'false') && isRussian) {
         lb.setIconCls('login2');
         lb.setText('Войти');
         lb.setHandler(function () { window.location.href = link_login; });
         Ext.getCmp('regButton').setVisible(true); //Ext.getCmp('profileButton').setVisible(false);
+		Ext.getCmp('openidButton').setVisible(true); 
     } else if ((ifLogged.toLowerCase() == 'false') && !isRussian) {
         lb.setIconCls('login2');
         lb.setText('Log on');
         lb.setHandler(function () { window.location.href = link_login; });
         Ext.getCmp('regButton').setVisible(true); //Ext.getCmp('profileButton').setVisible(false);
+		Ext.getCmp('openidButton').setVisible(true); 
     } else if ((ifLogged.toLowerCase() == 'true') && isRussian) {
         lb.setIconCls('logout2');
         lb.setText('Выйти');
         lb.setHandler(function () { window.location.href = link_logoff; });
         Ext.getCmp('regButton').setVisible(false); //Ext.getCmp('profileButton').setVisible(true);
+		Ext.getCmp('openidButton').setVisible(false); 
     } else {
         lb.setIconCls('logout2');
         lb.setText('Log off');
         lb.setHandler(function () { window.location.href = link_logoff; });
         Ext.getCmp('regButton').setVisible(false); //Ext.getCmp('profileButton').setVisible(true);
+		Ext.getCmp('openidButton').setVisible(false); 
     }
 });

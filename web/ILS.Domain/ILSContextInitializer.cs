@@ -28,14 +28,15 @@ namespace ILS.Domain
 			var teacher = context.Role.Add(new Role() { Name = "Teacher" });
 			var student = context.Role.Add(new Role() {	Name = "Student" });
             context.User.Add(new User() {
-                Name = "Alpha_Tester", PasswordHash = CalculateSHA1("Learning_in_3D"), Email = "sumrandommail@gmail.com", Roles = new List<Role> { teacher, student }, IsApproved = true
+                Name = "Alpha_Tester", PasswordHash = CalculateSHA1("Learning_in_3D"), Email = "sumrandommail@gmail.com", Roles = new List<Role> { admin, teacher, student }, IsApproved = true
             });
-            context.User.Add(new User() {
-                Name = "admin", PasswordHash = CalculateSHA1("password"), Email = "ihavemailtoo@gmail.com", Roles = new List<Role> { admin, teacher, student }, IsApproved = true
-            });
+            
             context.User.Add(new User()
             {
                 Name = "teacher2", PasswordHash = CalculateSHA1("password"), Roles = new List<Role> { teacher, student }, IsApproved = false
+            });
+            context.User.Add(new User() {
+                Name = "admin", PasswordHash = CalculateSHA1("password"), Email = "ihavemailtoo@gmail.com", Roles = new List<Role> { admin, teacher, student }, IsApproved = true
             });
             context.User.Add(new User() {
                 Name = "student1", PasswordHash = CalculateSHA1("password"), Roles = new List<Role> { student }, IsApproved = false

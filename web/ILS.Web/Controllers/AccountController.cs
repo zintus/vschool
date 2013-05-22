@@ -101,7 +101,9 @@ namespace ILS.Controllers
                 PasswordHash = ILS.Web.Extensions.EFMembershipProvider.CalculateSHA1(password),
                 FirstName = firstname,
                 LastName = lastname,
-                Email = email
+                Email = email,
+                Roles = new List<Role> { context.Role.Add(new Role() { Name = "Student" }) }
+                //Roles = new List<Role> { Enumerable.Single<Role>(context.Role, x => x.Name == "Student") }
             });
             context.SaveChanges();
             return Json(new { success = true });
