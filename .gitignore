@@ -141,10 +141,9 @@ Temp/
 
 # unity specific ignores
 *.userprefs
-*.csproj
+unity/*.csproj
 *.pidb
-*.sln
-*.userprefs
+unity/*.sln
 *.unityproj
 
 Library/cache
