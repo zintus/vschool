@@ -91,6 +91,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeologyController.cs" />
+    <Compile Include="Controllers\OpenIDController.cs" />
     <Compile Include="Controllers\RenderController.cs" />
     <Compile Include="Controllers\StructController.cs" />
     <Compile Include="Controllers\WorkflowController.cs" />
@@ -218,6 +219,7 @@
     <Content Include="Views\Struct\Index.cshtml" />
     <Content Include="Views\Render\Index.cshtml" />
     <Content Include="Views\Ideology\Index.cshtml" />
+    <Content Include="Views\OpenID\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
