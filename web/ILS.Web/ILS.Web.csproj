@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{00E15B0F-3AC4-407E-86BD-D473E520CB37}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ILS.Web</RootNamespace>
+    <AssemblyName>ILS.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\..\..\Документы\Моя папка\Диплом\program\HtmlAgilityPack.1.4.0\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\..\Документы\Моя папка\Диплом\program\DotNetZipLib-DevKit-v1.9\zip-v1.9\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter">
+      <HintPath>..\packages\ValueInjecter\Omu.ValueInjecter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdeologyController.cs" />
+    <Compile Include="Controllers\RenderController.cs" />
+    <Compile Include="Controllers\StructController.cs" />
+    <Compile Include="Controllers\WorkflowController.cs" />
+    <Compile Include="DataExtensions\DataExtensions.cs" />
+    <Compile Include="Extensions\ContextConfigurator.cs" />
+    <Compile Include="Extensions\EFMembershipProvider.cs" />
+    <Compile Include="Extensions\EFRoleProvider.cs" />
+    <Compile Include="Extensions\EFSessionModule.cs" />
+    <Compile Include="Extensions\JsonController.cs" />
+    <Compile Include="Extensions\PerSessionLifetimeManager.cs" />
+    <Compile Include="Extensions\UnityDependencyResolver.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\icons.css" />
+    <Content Include="Content\icons\add.png" />
+    <Content Include="Content\icons\browseFiles.png" />
+    <Content Include="Content\icons\course.png" />
+    <Content Include="Content\icons\course_add.png" />
+    <Content Include="Content\icons\course_remove.png" />
+    <Content Include="Content\icons\english.png" />
+    <Content Include="Content\icons\lecture.png" />
+    <Content Include="Content\icons\lecture_add.png" />
+    <Content Include="Content\icons\lecture_remove.png" />
+    <Content Include="Content\icons\login1.png" />
+    <Content Include="Content\icons\login2.png" />
+    <Content Include="Content\icons\logout1.png" />
+    <Content Include="Content\icons\logout2.png" />
+    <Content Include="Content\icons\main_ideology.png" />
+    <Content Include="Content\icons\main_render.png" />
+    <Content Include="Content\icons\main_struct.png" />
+    <Content Include="Content\icons\move_down.png" />
+    <Content Include="Content\icons\move_up.png" />
+    <Content Include="Content\icons\paragraph.png" />
+    <Content Include="Content\icons\paragraph_add.png" />
+    <Content Include="Content\icons\paragraph_remove.png" />
+    <Content Include="Content\icons\question.png" />
+    <Content Include="Content\icons\remove.png" />
+    <Content Include="Content\icons\russian.png" />
+    <Content Include="Content\icons\test.png" />
+    <Content Include="Content\icons\theme.png" />
+    <Content Include="Content\icons\upload.png" />
+    <Content Include="Content\icons\theme_add.png" />
+    <Content Include="Content\icons\theme_remove.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\ext\bootstrap.js" />
+    <Content Include="Scripts\ext\ext-all-debug.js" />
+    <Content Include="Scripts\ext\ext-all.js" />
+    <Content Include="Scripts\ext\resources\css\ext-all-access.css" />
+    <Content Include="Scripts\ext\resources\css\ext-all-debug.css" />
+    <Content Include="Scripts\ext\resources\css\ext-all-scoped.css" />
+    <Content Include="Scripts\ext\resources\css\ext-all.css" />
+    <Content Include="Scripts\ext\resources\css\ext-ie-scoped.css" />
+    <Content Include="Scripts\ext\resources\css\ext-ie.css" />
+    <Content Include="Scripts\ext\resources\css\ext-sandbox.css" />
+    <Content Include="Scripts\ext\resources\css\ext-standard-scoped.css" />
+    <Content Include="Scripts\ext\resources\css\ext-standard.css" />
+    <Content Include="Scripts\ils.admin.js" />
+    <Content Include="Scripts\jointJS\joint.all.min.js" />
+    <Content Include="Scripts\struct.tree.js" />
+    <Content Include="Scripts\struct.forms.js" />
+    <Content Include="Scripts\ils.workflow.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\render.js" />
+    <Content Include="Scripts\struct.js" />
+    <Content Include="Scripts\struct.toolbar.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\ext\examples\ux\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ILS.Domain\ILS.Domain.csproj">
+      <Project>{5E9A5D1D-25AC-4C84-AF14-ACB823BB5823}</Project>
+      <Name>ILS.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Workflow\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\NotLoggedInLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="UnityDeploy\Main.unity3d" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Struct\Index.cshtml" />
+    <Content Include="Views\Render\Index.cshtml" />
+    <Content Include="Views\Ideology\Index.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7639</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8080/ILS</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
