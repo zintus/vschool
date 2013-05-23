@@ -35,6 +35,7 @@ namespace ILS.Domain
                 Email = "sumrandommail@gmail.com",
                 Roles = new List<Role> { teacher, student },
                 IsApproved = true
+            });
             context.User.Add(new User()
             {
                 Name = "admin",
@@ -43,7 +44,7 @@ namespace ILS.Domain
                 Roles = new List<Role> { admin, teacher, student },
                 IsApproved = true
             });
-            
+
             context.User.Add(new User()
             {
                 Name = "teacher2",
@@ -1006,12 +1007,6 @@ namespace ILS.Domain
             });
             #endregion
 
-
-
-
-
-
-
             #region Math
             /*var course2 = new Course() { Name = "Математика", Diagramm = ILSContextInitializer.DefaultDiagramm }; context.Course.Add(course2);
             var theme21 = new Theme() { OrderNumber = 1, Name = "Дифференцирование" }; course2.Themes.Add(theme21);
@@ -1057,7 +1052,6 @@ namespace ILS.Domain
                 q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Ответ " + i + "4", IfCorrect = false });
 			}*/
             #endregion
-
 
         }
 
