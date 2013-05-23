@@ -139,12 +139,13 @@ _ReSharper*/
 builds/
 Temp/
 
-#unity specific ignores
+# unity specific ignores
 *.userprefs
 *.csproj
 *.pidb
 *.sln
 *.userprefs
+*.unityproj
 
 Library/cache
 Library/previews
