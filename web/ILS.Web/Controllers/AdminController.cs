@@ -53,7 +53,7 @@ namespace ILS.Web.Controllers
                 if (count == 0)
                 {
                     user.EXP = 0;
-                    user.Roles = null;
+                    user.Roles = new HashSet<Role>();
                     user.IsApproved = false;
                 }
                 
@@ -89,7 +89,7 @@ namespace ILS.Web.Controllers
         public JsonResult UsersList()
         {
             List<UserModel> jsonList = new List<UserModel>();
-            IEnumerable<User> activeUsers = Enumerable.Where<User>(context.User, x => x.Roles != null);
+            IEnumerable<User> activeUsers = Enumerable.Where<User>(context.User, x => x.Roles.Count > 0);
             foreach (User user in activeUsers)
             {
                     UserModel temp = new UserModel();
@@ -172,7 +172,7 @@ namespace ILS.Web.Controllers
                     }
                 }
             }
-            if (isTeacher)
+            /*if (isTeacher)
             {
                 if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Teacher") == 0)
                 {
@@ -227,6 +227,51 @@ namespace ILS.Web.Controllers
                         context.Role.Remove(r);
                     }
                 }
+            }*/
+            if (isTeacher)
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Teacher") == 0)
+                {
+                    selectedUser.Roles.Add(Enumerable.FirstOrDefault<Role>(context.Role,  x => x.Name == "Teacher"));
+                }
+            }
+            else
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Teacher") > 0)
+                {
+                    selectedUser.Roles.Remove(Enumerable.FirstOrDefault<Role>(context.Role, x => x.Name == "Teacher"));
+                }
+
+            }
+            if (isStudent)
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Student") == 0)
+                {
+                    selectedUser.Roles.Add(Enumerable.FirstOrDefault<Role>(context.Role, x => x.Name == "Student"));
+                }
+            }
+            else
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Student") > 0)
+                {
+                    selectedUser.Roles.Remove(Enumerable.FirstOrDefault<Role>(context.Role, x => x.Name == "Student"));
+                }
+
+            }
+            if (isAdmin)
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Admin") == 0)
+                {
+                    selectedUser.Roles.Add(Enumerable.FirstOrDefault<Role>(context.Role, x => x.Name == "Admin"));
+                }
+            }
+            else
+            {
+                if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Admin") > 0)
+                {
+                    selectedUser.Roles.Remove(Enumerable.FirstOrDefault<Role>(context.Role, x => x.Name == "Admin"));
+                }
+
             }
             context.SaveChanges();
             return Json(new

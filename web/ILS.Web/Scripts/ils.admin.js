@@ -54,7 +54,7 @@ if (isRussian)
 	ils.admin.profileLastName = 'Фамилия';
 	ils.admin.profileEXP = 'Опыт';
 	ils.admin.profileAdmin = 'Администратор';
-	ils.admin.profileTeacher = 'Учитель';
+	ils.admin.profileTeacher = 'Преподаватель';
 	ils.admin.profileStudent = 'Студент';
 }
 
@@ -148,86 +148,9 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
             xtype: 'checkbox'
         }
     }],
-	tbar: [/*{
-                iconCls: 'icon-user-add',
-                text: ils.admin.textAdd,
-                handler: function () {
-					var enteredName = 'New Friend';
-					var enteredEmail = 'new@google.com';
-					Ext.Msg.prompt(ils.admin.promptName, ils.admin.promptNameText, function(btn, text){
-						if (btn == 'ok'){
-							enteredName = text;
-							Ext.Msg.prompt(ils.admin.promptEmail, ils.admin.promptEmailText, function(btn, text){
-								if (btn == 'ok'){
-									enteredEmail = text;
-									var e = new UserModel({
-										Name: enteredName,
-										IsApproved: 'false',
-										Email: enteredEmail
-									});
-									//editor.stopEditing();
-									//store.insert(0, e);
-									ils.admin.store.add(e);
-									//grid.getView().refresh();
-									//grid.getSelectionModel().selectRow(0);
-									//editor.startEditing(0);
-								}
-							});
-						}
-					});
-					
-                    
-                }
-            }, */{
-                ref: '../removeBtn',
-                iconCls: 'icon-user-delete',
-                text: ils.admin.textRemove,
-                handler: function () {
-                    //editor.stopEditing();
-					var grid = this.up('grid');
-                    var s = grid.getSelectionModel().getSelection();
-					if (!s.length) {
-						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
-						return;
-					}
-					Ext.Msg.confirm(ils.admin.promptRemove, ils.admin.promptRemoveText, function (button) {
-						if (button == 'yes') {
-							ils.admin.store.remove(s[0]);
-						}
-					});
-                    //for (var i = 0, r; r = s[i]; i++) {
-                        
-                    //}
-                }
-            }, {
-                iconCls: 'icon-user-change',
-                text: ils.admin.textToggle,
-                handler: function () {
-                    //editor.stopEditing();
-					var grid = this.up('grid');
-                    var s = grid.getSelectionModel().getSelection();
-					if (!s.length) {
-						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
-						return;
-					}
-					var index = grid.store.indexOf(s[0]);
-					ils.admin.store.data.items[index].data.IsApproved = !ils.admin.store.data.items[index].data.IsApproved;
-					grid.getView().refresh();
-					//ils.admin.store.remove(s[0]);
-					//s[0].data.IsApproved = !s[0].data.IsApproved;
-					//ils.admin.store.add(s[0]);
-                }
-            }, {
-                iconCls: 'icon-user-save',
-                text: ils.admin.textSaveChanges,
-                handler: function () {
-                    ils.admin.store.save();
-				}
-            }, {
-                iconCls: 'icon-user-save',
-                text: ils.admin.textProfile,
-                handler: function () {
-                    var grid = this.up('grid');
+	listeners: {
+        itemdblclick: function () {
+                    var grid = this;
                     var s = grid.getSelectionModel().getSelection();
 					if (!s.length) {
 						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
@@ -243,7 +166,7 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
 							ils.admin.userProfile = new Ext.Window({
 								title: ils.admin.textProfile,
 								layout: 'fit',
-								width: 400,
+								width: 300,
 								height: 270,
 								y: 150,
 								closable: true,
@@ -326,7 +249,7 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
 											name: 'update',
 											xtype: 'button',
 											y: 5,
-											x: 335,
+											x: 235,
 											width: 45,
 											value: 'OK',
 											text: 'OK',
@@ -359,6 +282,82 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
 					});
 					
                 }
+        },
+	tbar: [/*{
+                iconCls: 'icon-user-add',
+                text: ils.admin.textAdd,
+                handler: function () {
+					var enteredName = 'New Friend';
+					var enteredEmail = 'new@google.com';
+					Ext.Msg.prompt(ils.admin.promptName, ils.admin.promptNameText, function(btn, text){
+						if (btn == 'ok'){
+							enteredName = text;
+							Ext.Msg.prompt(ils.admin.promptEmail, ils.admin.promptEmailText, function(btn, text){
+								if (btn == 'ok'){
+									enteredEmail = text;
+									var e = new UserModel({
+										Name: enteredName,
+										IsApproved: 'false',
+										Email: enteredEmail
+									});
+									//editor.stopEditing();
+									//store.insert(0, e);
+									ils.admin.store.add(e);
+									//grid.getView().refresh();
+									//grid.getSelectionModel().selectRow(0);
+									//editor.startEditing(0);
+								}
+							});
+						}
+					});
+					
+                    
+                }
+            }, */{
+                ref: '../removeBtn',
+                iconCls: 'remove',
+                text: ils.admin.textRemove,
+                handler: function () {
+                    //editor.stopEditing();
+					var grid = this.up('grid');
+                    var s = grid.getSelectionModel().getSelection();
+					if (!s.length) {
+						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
+						return;
+					}
+					Ext.Msg.confirm(ils.admin.promptRemove, ils.admin.promptRemoveText, function (button) {
+						if (button == 'yes') {
+							ils.admin.store.remove(s[0]);
+						}
+					});
+                    //for (var i = 0, r; r = s[i]; i++) {
+                        
+                    //}
+                }
+            }, {
+                iconCls: 'add',
+                text: ils.admin.textToggle,
+                handler: function () {
+                    //editor.stopEditing();
+					var grid = this.up('grid');
+                    var s = grid.getSelectionModel().getSelection();
+					if (!s.length) {
+						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
+						return;
+					}
+					var index = grid.store.indexOf(s[0]);
+					ils.admin.store.data.items[index].data.IsApproved = !ils.admin.store.data.items[index].data.IsApproved;
+					grid.getView().refresh();
+					//ils.admin.store.remove(s[0]);
+					//s[0].data.IsApproved = !s[0].data.IsApproved;
+					//ils.admin.store.add(s[0]);
+                }
+            }, {
+                iconCls: 'paragraph_add',
+                text: ils.admin.textSaveChanges,
+                handler: function () {
+                    ils.admin.store.save();
+				}
             }]
 });
 
