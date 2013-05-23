@@ -4,6 +4,7 @@ Ext.require('Ext.ux.grid.*');
 
 if (Ext.util.Cookies.get("language") == null) Ext.util.Cookies.set("language", lang_pref);
 if (Ext.util.Cookies.get("language") == "Russian") isRussian = true; else isRussian = false;
+ils.admin.textProfile = 'User profile';
 ils.admin.textAdd = 'Add User';
 ils.admin.textRemove = 'Remove User';
 ils.admin.textSaveChanges = 'Save Changes';
@@ -20,8 +21,17 @@ ils.admin.promptRemoveText = 'Are you sure?';
 ils.admin.alert = 'Info';
 ils.admin.alertText = 'No rows selected';
 ils.admin.gridName = 'List of users';
+ils.admin.profileName = 'Account';
+ils.admin.profileEmail = 'Email';
+ils.admin.profileFirstName = 'First name';
+ils.admin.profileLastName = 'Last name';
+ils.admin.profileEXP = 'Experience';
+ils.admin.profileAdmin = 'Admin';
+ils.admin.profileTeacher = 'Teacher';
+ils.admin.profileStudent = 'Student';
 if (isRussian)
 {
+	ils.admin.textProfile = 'Профиль пользователя';
 	ils.admin.textAdd = 'Добавить пользователя';
 	ils.admin.textRemove = 'Удалить пользователя';
 	ils.admin.textSaveChanges = 'Сохранить изменения';
@@ -38,6 +48,14 @@ if (isRussian)
 	ils.admin.alert = 'Информация';
 	ils.admin.alertText = 'Не выбрана ни одна строка';
 	ils.admin.gridName = 'Список пользователей';
+	ils.admin.profileName = 'Аккаунт';
+	ils.admin.profileEmail = 'Email';
+	ils.admin.profileFirstName = 'Имя';
+	ils.admin.profileLastName = 'Фамилия';
+	ils.admin.profileEXP = 'Опыт';
+	ils.admin.profileAdmin = 'Администратор';
+	ils.admin.profileTeacher = 'Учитель';
+	ils.admin.profileStudent = 'Студент';
 }
 
 Ext.define('UserModel', {
@@ -93,6 +111,8 @@ ils.admin.store = new Ext.data.Store({
     remoteSort: false
 });
 
+
+
 ils.admin.userGrid = new Ext.grid.GridPanel({
     store: ils.admin.store,
     columns: [
@@ -128,7 +148,7 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
             xtype: 'checkbox'
         }
     }],
-	tbar: [{
+	tbar: [/*{
                 iconCls: 'icon-user-add',
                 text: ils.admin.textAdd,
                 handler: function () {
@@ -158,7 +178,7 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
 					
                     
                 }
-            }, {
+            }, */{
                 ref: '../removeBtn',
                 iconCls: 'icon-user-delete',
                 text: ils.admin.textRemove,
@@ -202,6 +222,142 @@ ils.admin.userGrid = new Ext.grid.GridPanel({
                 text: ils.admin.textSaveChanges,
                 handler: function () {
                     ils.admin.store.save();
+				}
+            }, {
+                iconCls: 'icon-user-save',
+                text: ils.admin.textProfile,
+                handler: function () {
+                    var grid = this.up('grid');
+                    var s = grid.getSelectionModel().getSelection();
+					if (!s.length) {
+						Ext.Msg.alert(ils.admin.alert, ils.admin.alertText);
+						return;
+					}
+					var index = grid.store.indexOf(s[0]);
+					Ext.Ajax.request({
+						url: document.location.href + '/UserProfile',    
+						success: function(response, opts) {
+							var a = eval('(' + response.responseText + ')');
+							
+							
+							ils.admin.userProfile = new Ext.Window({
+								title: ils.admin.textProfile,
+								layout: 'fit',
+								width: 400,
+								height: 270,
+								y: 150,
+								closable: true,
+								resizable: false,
+								draggable: false,
+								plain: true,
+								border: false, 
+								items: new Ext.Panel({
+										defaultType: 'displayfield',
+										fieldDefaults: {
+											labelWidth: 200,
+											msgTarget: 'side'
+										},
+										bodyStyle:{"background-color":"#DFE8F6"}, 
+										items: [{
+											
+											fieldLabel: ils.admin.profileName,
+											name: 'UserName',
+											id: 'UserName',
+											y: 5,
+											x: 5,
+											value: a[0].Name
+										}, {
+											fieldLabel: ils.admin.profileFirstName,
+											xtype: 'textfield',
+											name: 'FirstName',
+											id: 'FirstName',
+											y: 5,
+											x: 5,
+											value: a[0].FirstName
+										}, {
+											fieldLabel: ils.admin.profileLastName,
+											xtype: 'textfield',
+											name: 'LastName',
+											id: 'LastName',
+											y: 5,
+											x: 5,
+											value: a[0].LastName
+										},{
+											fieldLabel: ils.admin.profileEmail,
+											name: 'Email',
+											xtype: 'textfield',
+											id: 'Email',
+											y: 5,
+											x: 5,
+											value: a[0].Email
+										},{
+											fieldLabel: ils.admin.profileEXP,
+											name: 'EXP',
+											y: 5,
+											x: 5,
+											value: a[0].EXP
+											
+										},{
+											fieldLabel: ils.admin.profileAdmin,
+											name: 'Admin',
+											xtype: 'checkboxfield',
+											id: 'Admin',
+											y: 5,
+											x: 5,
+											checked: a[0].IsAdmin
+										},{
+											fieldLabel: ils.admin.profileTeacher,
+											name: 'Teacher',
+											xtype: 'checkboxfield',
+											id: 'Teacher',
+											y: 5,
+											x: 5,
+											checked: a[0].IsTeacher
+										},{
+											fieldLabel: ils.admin.profileStudent,
+											name: 'Student',
+											xtype: 'checkboxfield',
+											id: 'Student',
+											y: 5,
+											x: 5,
+											checked: a[0].IsStudent
+										},{
+											fieldLabel: 'OK',
+											name: 'update',
+											xtype: 'button',
+											y: 5,
+											x: 335,
+											width: 45,
+											value: 'OK',
+											text: 'OK',
+											handler: function () {
+												var f = ils.admin.userProfile.items.items[0];
+												Ext.Ajax.request({
+														url: document.location.href + '/UpdateProfile', 
+														jsonData: {
+																'login' : f.getComponent('UserName').getValue(),
+																'email' : f.getComponent('Email').getValue(),
+																'firstName' : f.getComponent('FirstName').getValue(),
+																'lastName' : f.getComponent('LastName').getValue(),
+																'isAdmin' : f.getComponent('Admin').checked,
+																'isTeacher' : f.getComponent('Teacher').checked,
+																'isStudent' : f.getComponent('Student').checked
+														}
+													});
+												ils.admin.userProfile.close();
+											}
+										}]
+									})
+							});
+							ils.admin.userProfile.show();
+							
+						},
+						jsonData: {
+								'login' : ils.admin.store.data.items[index].data.Name
+							
+						}
+					});
+					
                 }
             }]
 });

@@ -15,23 +15,26 @@ using System.Data.Entity.Infrastructure;
 
 namespace ILS.Web.Controllers
 {
-	[Authorize(Roles = "Admin, Teacher")]
+    [Authorize(Roles = "Admin, Teacher")]
     public class StructController : JsonController
-	{
-		ILSContext context;
-        ObjectContext context_obj;
+    {
+        ILSContext context;
 
-		public StructController(ILSContext context)
-		{
-			this.context = context;
+        ObjectContext context_obj;
+        ObjectContext contextGenerator_obj;
+
+        public StructController(ILSContext context)
+        {
+            this.context = context;
             this.context_obj = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)context).ObjectContext;
-		}
-		
-		//[Authorize(Roles = "Teacher")]
-		public ActionResult Index()
-		{
-			return View();
-		}
+            this.contextGenerator_obj = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)context).ObjectContext;
+        }
+
+        //[Authorize(Roles = "Teacher")]
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         //[Authorize(Roles = "Teacher")]
         /*public string AddDoc(Guid id, string type_file, HttpPostedFileBase file)
@@ -201,44 +204,48 @@ namespace ILS.Web.Controllers
             
         }*/
 
-		public ActionResult ReadTree(string node)        
-		{
+        public ActionResult ReadTree(string node)
+        {
             /*Метод вызывается деревом из файла struct.js в двух случаях. Первый - при первоначальной загрузке дерева.
             Тогда id = "treeRoot", и мы возвращаем список курсов. Второй - когда пользователь разворачивает очередную ветку дерева.
             Тогда id = идентификатор курса/темы/лекции/теста (поиском по базе данных мы можем узнать, чего именно),
             и нам нужно вернуть список тем этого курса / лекций и тестов этой темы / параграфов этой лекции / вопросов этого теста*/
-			if (node == "treeRoot")
-			{
-				/*верхний уровень - возвращаем список курсов. Заметьте, что оформлен он именно так, как нужно элементам дерева,
+            if (node == "treeRoot")
+            {
+                /*верхний уровень - возвращаем список курсов. Заметьте, что оформлен он именно так, как нужно элементам дерева,
                 т.е. есть параметр iconCls, определяющий иконку, текст элемента, а также id, с помощью которого мы,
                 в свою очередь, сможем развернуть следующую ветку, когда снова вызовем этот метод*/
-                return Json(context.Course.ToList().OrderBy(x => x.Name).Select(x => new {
+
+                return Json(context.Course.ToList().OrderBy(x => x.Name).Select(x => new
+                {
                     iconCls = "course",
-					id = x.Id.ToString(),
-					text = x.Name
-				}), JsonRequestBehavior.AllowGet);
-			}
-			var guid = Guid.Parse(node);
-			var course = context.Course.Find(guid);
-			if (course != null)
-			{
+                    id = x.Id.ToString(),
+                    text = x.Name
+                }), JsonRequestBehavior.AllowGet);
+            }
+            var guid = Guid.Parse(node);
+            var course = context.Course.Find(guid);
+            if (course != null)
+            {
                 //уровень курса - возвращаем список тем
-				return Json(course.Themes.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
-				    iconCls = "theme",
-					id = x.Id.ToString(),
-					text = x.Name
-				}), JsonRequestBehavior.AllowGet);
-			}
-			var theme = context.Theme.Find(guid);
-			if (theme != null)
-			{
-				//уровень тем - возвращаем список лекций и тестов
-                return Json(theme.ThemeContents.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
+                return Json(course.Themes.ToList().OrderBy(x => x.OrderNumber).Select(x => new
+                {
+                    iconCls = "theme",
+                    id = x.Id.ToString(),
+                    text = x.Name
+                }), JsonRequestBehavior.AllowGet);
+            }
+            var theme = context.Theme.Find(guid);
+            if (theme != null)
+            {
+                //уровень тем - возвращаем список лекций и тестов
+                return Json(theme.ThemeContents.ToList().OrderBy(x => x.OrderNumber).Select(x => new
+                {
                     iconCls = (x is Lecture) ? "lecture" : "test",
-					id = x.Id.ToString(),
-					text = x.Name
-				}), JsonRequestBehavior.AllowGet);
-			}
+                    id = x.Id.ToString(),
+                    text = x.Name
+                }), JsonRequestBehavior.AllowGet);
+            }
             var tc = context.ThemeContent.Find(guid);
             if (tc != null)
             {
@@ -246,7 +253,8 @@ namespace ILS.Web.Controllers
                 {
                     //уровень лекций - возвращаем список параграфов
                     Lecture lec = (Lecture)tc;
-                    return Json(lec.Paragraphs.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
+                    return Json(lec.Paragraphs.ToList().OrderBy(x => x.OrderNumber).Select(x => new
+                    {
                         iconCls = "paragraph",
                         id = x.Id.ToString(),
                         text = x.Header,
@@ -257,7 +265,8 @@ namespace ILS.Web.Controllers
                 {
                     //уровень тестов - возвращаем список вопросов
                     Test test = (Test)tc;
-                    return Json(test.Questions.ToList().OrderBy(x => x.OrderNumber).Select(x => new {
+                    return Json(test.Questions.ToList().OrderBy(x => x.OrderNumber).Select(x => new
+                    {
                         iconCls = "question",
                         id = x.Id.ToString(),
                         text = "Вопрос №" + x.OrderNumber,
@@ -265,34 +274,58 @@ namespace ILS.Web.Controllers
                     }), JsonRequestBehavior.AllowGet);
                 }
             }
-			return new EmptyResult();
-		}
+            return new EmptyResult();
+        }
 
         #region Read-Save
         /*метод, который возвращает информацию о курсе, теме или содержимом темы в зависимости от глубины дерева,
          переданной параметром. Информация однотипная, поэтому я и объединил три разных запроса-ответа в один метод*/
         public ActionResult ReadCTTC(Guid id, int depth)
         {
-            if (depth == 1) 
+            if (depth == 1)
             {
                 var c = context.Course.Find(id);
-                return Json(new { success = true, data = new {
-                    id = c.Id, name = c.Name, type = "course", ordernumber = ""
-                } }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = true,
+                    data = new
+                    {
+                        id = c.Id,
+                        name = c.Name,
+                        type = "course",
+                        ordernumber = ""
+                    }
+                }, JsonRequestBehavior.AllowGet);
             }
             if (depth == 2)
             {
                 var t = context.Theme.Find(id);
-                return Json(new { success = true, data = new {
-                    id = t.Id, name = t.Name, type = "theme", ordernumber = t.OrderNumber
-                } }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = true,
+                    data = new
+                    {
+                        id = t.Id,
+                        name = t.Name,
+                        type = "theme",
+                        ordernumber = t.OrderNumber
+                    }
+                }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 var tc = context.ThemeContent.Find(id);
-                return Json(new { success = true, data = new {
-                    id = tc.Id, name = tc.Name, type = (tc is Lecture) ? "lecture" : "test", ordernumber = tc.OrderNumber
-                } }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = true,
+                    data = new
+                    {
+                        id = tc.Id,
+                        name = tc.Name,
+                        type = (tc is Lecture) ? "lecture" : "test",
+                        ordernumber = tc.OrderNumber
+                    }
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -318,7 +351,7 @@ namespace ILS.Web.Controllers
             s += " \"header\" : \"" + p.Header + "\",";
             s += " \"text\" : \"" + p.Text + "\",";
             s += " \"piccount\" : " + p.Pictures.Count;
-            foreach (var x in p.Pictures.OrderBy(x => x.OrderNumber)) 
+            foreach (var x in p.Pictures.OrderBy(x => x.OrderNumber))
             {
                 s += ", \"pic" + x.OrderNumber + "_path\" : \"" + x.Path + "\"";
             }
@@ -330,7 +363,7 @@ namespace ILS.Web.Controllers
             object obj = sr.Deserialize<Object>(s);
             return Json(sr.Deserialize<Object>(s), JsonRequestBehavior.AllowGet);
         }
-   
+
         [ValidateInput(false)]
         public string SaveParagraph(Guid id, string header, string text, int piccount)
         {
@@ -345,7 +378,7 @@ namespace ILS.Web.Controllers
             path += "/Paragraph_" + p.Id.ToString();
             string physpath = Server.MapPath("~/Content/pics_base") + path;
             string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveParagraph", "") + "/Content/pics_base" + path;
-            if (!Directory.Exists(physpath)) Directory.CreateDirectory(physpath);     
+            if (!Directory.Exists(physpath)) Directory.CreateDirectory(physpath);
 
             if (p.Pictures.Count > piccount)
             {
@@ -365,8 +398,8 @@ namespace ILS.Web.Controllers
                 {
                     if (System.IO.File.Exists(pic.Path)) System.IO.File.Delete(pic.Path);
                     file.SaveAs(physpath + "/" + pic.OrderNumber + "_" + file.FileName);
-                    pic.Path = virtpath + "/" + pic.OrderNumber + "_" + file.FileName;                    
-                }                
+                    pic.Path = virtpath + "/" + pic.OrderNumber + "_" + file.FileName;
+                }
             }
 
             context.SaveChanges();
@@ -377,31 +410,36 @@ namespace ILS.Web.Controllers
         {
             //HttpContext.Request.UserLanguages.Count();
             var c = context.Question.Find(Guid.Parse(id_s));
-            return Json(new { success = true, data = new {
-                id = c.Id,
-                ordernumber = c.OrderNumber,
-                text = c.Text,
-                picq_path = (c.PicQ != null) ? c.PicQ : "",
-                pica_path = (c.PicA != null) ? c.PicA : "",                
-                rb = (c.IfPictured) ? "by_pic" : "by_txt",
-                anscount1 = c.AnswerVariants.Count,
-                anscount2 = c.AnswerVariants.Count,                
-                q1_text = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).Text : "",
-                q2_text = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).Text : "",
-                q3_text = (!c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).Text : "",
-                q4_text = (!c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).Text : "",
-                q5_text = (!c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).Text : "",
-                q1_stat = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).IfCorrect : false,
-                q2_stat = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).IfCorrect : false,
-                q3_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).IfCorrect : false,
-                q4_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).IfCorrect : false,
-                q5_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).IfCorrect : false,
-                avp1 = (c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).IfCorrect : false,
-                avp2 = (c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).IfCorrect : false,
-                avp3 = (c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).IfCorrect : false,
-                avp4 = (c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).IfCorrect : false,
-                avp5 = (c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).IfCorrect : false
-            } }, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    id = c.Id,
+                    ordernumber = c.OrderNumber,
+                    text = c.Text,
+                    picq_path = (c.PicQ != null) ? c.PicQ : "",
+                    pica_path = (c.PicA != null) ? c.PicA : "",
+                    rb = (c.IfPictured) ? "by_pic" : "by_txt",
+                    anscount1 = c.AnswerVariants.Count,
+                    anscount2 = c.AnswerVariants.Count,
+                    q1_text = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).Text : "",
+                    q2_text = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).Text : "",
+                    q3_text = (!c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).Text : "",
+                    q4_text = (!c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).Text : "",
+                    q5_text = (!c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).Text : "",
+                    q1_stat = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).IfCorrect : false,
+                    q2_stat = (!c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).IfCorrect : false,
+                    q3_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).IfCorrect : false,
+                    q4_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).IfCorrect : false,
+                    q5_stat = (!c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).IfCorrect : false,
+                    avp1 = (c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 1).IfCorrect : false,
+                    avp2 = (c.IfPictured) ? c.AnswerVariants.Single(x => x.OrderNumber == 2).IfCorrect : false,
+                    avp3 = (c.IfPictured && (c.AnswerVariants.Count >= 3)) ? c.AnswerVariants.Single(x => x.OrderNumber == 3).IfCorrect : false,
+                    avp4 = (c.IfPictured && (c.AnswerVariants.Count >= 4)) ? c.AnswerVariants.Single(x => x.OrderNumber == 4).IfCorrect : false,
+                    avp5 = (c.IfPictured && (c.AnswerVariants.Count >= 5)) ? c.AnswerVariants.Single(x => x.OrderNumber == 5).IfCorrect : false
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [ValidateInput(false)]
@@ -421,7 +459,7 @@ namespace ILS.Web.Controllers
                 path += "/Theme_" + q.Test.Theme_Id.ToString();
                 path += "/Test_" + q.Test_Id.ToString();
                 string physpath = Server.MapPath("~/Content/pics_base") + path;
-                string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveQuestion","") + "/Content/pics_base" + path;
+                string virtpath = HttpContext.Request.Url.ToString().Replace("/Struct/SaveQuestion", "") + "/Content/pics_base" + path;
                 if (!Directory.Exists(physpath)) Directory.CreateDirectory(physpath);
                 if (System.IO.File.Exists(q.PicQ)) System.IO.File.Delete(q.PicQ); //если есть старый, то удаляем его
                 physpath += "/" + q.OrderNumber + "q_" + picq_file.FileName;
@@ -434,7 +472,7 @@ namespace ILS.Web.Controllers
             {
                 q.IfPictured = false; q.PicA = null;
                 while (q.AnswerVariants.Count() > 0) context_obj.DeleteObject(q.AnswerVariants.First());
-                q.AnswerVariants.Add(new AnswerVariant { OrderNumber = 1, Text = q1_text, Question = q, IfCorrect = (q1_stat != null) ? true : false});
+                q.AnswerVariants.Add(new AnswerVariant { OrderNumber = 1, Text = q1_text, Question = q, IfCorrect = (q1_stat != null) ? true : false });
                 q.AnswerVariants.Add(new AnswerVariant { OrderNumber = 2, Text = q2_text, Question = q, IfCorrect = (q2_stat != null) ? true : false });
                 if (anscount1 >= 3) q.AnswerVariants.Add(new AnswerVariant { OrderNumber = 3, Question = q, Text = q3_text, IfCorrect = (q3_stat != null) ? true : false });
                 if (anscount1 >= 4) q.AnswerVariants.Add(new AnswerVariant { OrderNumber = 4, Question = q, Text = q4_text, IfCorrect = (q4_stat != null) ? true : false });
@@ -488,7 +526,7 @@ namespace ILS.Web.Controllers
             Course c = context.Course.Find(id);
             string path = Server.MapPath("~/Content/pics_base") + "/Course_" + c.Id.ToString();
             if (Directory.Exists(path)) Directory.Delete(path, true);
-            context_obj.DeleteObject(c);    
+            context_obj.DeleteObject(c);
             context_obj.SaveChanges();
             return "OK";
         }
@@ -501,7 +539,8 @@ namespace ILS.Web.Controllers
             else ordnmb = c.Themes.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
             var t = new Theme
             {
-                OrderNumber = ordnmb, Name = "Новая тема"
+                OrderNumber = ordnmb,
+                Name = "Новая тема"
             };
             c.Themes.Add(t);
             context.SaveChanges();
@@ -532,10 +571,10 @@ namespace ILS.Web.Controllers
             int num;
             if (t.ThemeContents.Count == 0) num = 1;
             else num = t.ThemeContents.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
-            var tc = new Lecture { OrderNumber = num, Name = "Новая лекция"};
+            var tc = new Lecture { OrderNumber = num, Name = "Новая лекция" };
             t.ThemeContents.Add(tc);
             context.SaveChanges();
-            return tc.Id;            
+            return tc.Id;
         }
 
         public Guid AddTest(Guid parent_id)
@@ -544,7 +583,7 @@ namespace ILS.Web.Controllers
             int num;
             if (t.ThemeContents.Count == 0) num = 1;
             else num = t.ThemeContents.OrderBy(x => x.OrderNumber).Last().OrderNumber + 1;
-            var tc = new Test { OrderNumber = num, Name = "Новый тест"};
+            var tc = new Test { OrderNumber = num, Name = "Новый тест" };
             t.ThemeContents.Add(tc);
             context.SaveChanges();
             return tc.Id;
@@ -553,12 +592,12 @@ namespace ILS.Web.Controllers
         public string RemoveContent(Guid id, Guid parent_id)
         {
             ThemeContent tc = context.ThemeContent.Find(id);
-            
+
             string path = Server.MapPath("~/Content/pics_base");
             path += "/Course_" + tc.Theme.Course_Id.ToString();
             path += "/Theme_" + tc.Theme_Id.ToString();
             if (tc is Lecture) path += "/Lecture_"; else path += "/Test_";
-            path += tc.Id.ToString();             
+            path += tc.Id.ToString();
             if (Directory.Exists(path)) Directory.Delete(path, true);
 
             context_obj.DeleteObject(tc);
@@ -664,7 +703,7 @@ namespace ILS.Web.Controllers
                     var parent = context.Course.Find(parent_id);
                     var prev_one = parent.Themes.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
-                    prev_one.OrderNumber = num;                    
+                    prev_one.OrderNumber = num;
                 }
             }
             else if (depth == 3)
@@ -676,7 +715,7 @@ namespace ILS.Web.Controllers
                     var parent = context.Theme.Find(parent_id);
                     var prev_one = parent.ThemeContents.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
-                    prev_one.OrderNumber = num;                    
+                    prev_one.OrderNumber = num;
                 }
             }
             else if (type == "paragraph")
@@ -688,7 +727,7 @@ namespace ILS.Web.Controllers
                     var parent = context.ThemeContent.Find(parent_id);
                     var prev_one = ((Lecture)parent).Paragraphs.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
-                    prev_one.OrderNumber = num;                    
+                    prev_one.OrderNumber = num;
                 }
             }
             else
@@ -700,7 +739,7 @@ namespace ILS.Web.Controllers
                     var parent = context.ThemeContent.Find(parent_id);
                     var prev_one = ((Test)parent).Questions.Where(x => x.OrderNumber == num - 1).First();
                     this_one.OrderNumber = num - 1;
-                    prev_one.OrderNumber = num;                    
+                    prev_one.OrderNumber = num;
                 }
             }
             context.SaveChanges();
@@ -732,7 +771,7 @@ namespace ILS.Web.Controllers
                 {
                     var next_one = parent.ThemeContents.First(x => x.OrderNumber == num + 1);
                     this_one.OrderNumber = num + 1;
-                    next_one.OrderNumber = num;                    
+                    next_one.OrderNumber = num;
                 }
             }
             else if (type == "paragraph")
@@ -745,7 +784,7 @@ namespace ILS.Web.Controllers
                 {
                     var next_one = ((Lecture)parent).Paragraphs.First(x => x.OrderNumber == num + 1);
                     this_one.OrderNumber = num + 1;
-                    next_one.OrderNumber = num;                    
+                    next_one.OrderNumber = num;
                 }
             }
             else
@@ -758,7 +797,7 @@ namespace ILS.Web.Controllers
                 {
                     var next_one = ((Test)parent).Questions.First(x => x.OrderNumber == num + 1);
                     this_one.OrderNumber = num + 1;
-                    next_one.OrderNumber = num;                    
+                    next_one.OrderNumber = num;
                 }
             }
             context.SaveChanges();

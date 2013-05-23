@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using ILS.Domain.QuestionGenerator;
 
 namespace ILS.Domain
 {
@@ -29,6 +30,17 @@ namespace ILS.Domain
         public DbSet<ParagraphRun> ParagraphRun { get; set; }
         public DbSet<QuestionRun> QuestionRun { get; set; }
         public DbSet<Answer> Answer { get; set; }
+        
+        // Генератор тестовых заданий
+        public DbSet<Level> Level { get; set; }
+        public DbSet<TypeOfQuestion> TypeOfQuestion { get; set; }
+        public DbSet<QuestionTemplate> QuestionTemplate { get; set; }
+        public DbSet<Parameter> Parameter { get; set; }
+        public DbSet<Constraint> Constraint { get; set; }
+        public DbSet<ParameterValue> ParameterValue { get; set; }
+        public DbSet<GeneratedTest> GeneratedTest { get; set; }
+        public DbSet<InstanceOfQuestion> InstanceOfQuestion { get; set; }
+        public DbSet<TestContent> TestContent { get; set; }
 
         public DbSet<ThemeLink> ThemeLink { get; set; }
         public DbSet<PersonalThemeLink> PersonalThemeLink { get; set; }
