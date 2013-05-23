@@ -30,6 +30,11 @@ namespace ILS.Domain
         public DbSet<QuestionRun> QuestionRun { get; set; }
         public DbSet<Answer> Answer { get; set; }
 
+        public DbSet<ThemeLink> ThemeLink { get; set; }
+        public DbSet<PersonalThemeLink> PersonalThemeLink { get; set; }
+        public DbSet<ThemeContentLink> ThemeContentLink { get; set; }
+        public DbSet<PersonalThemeContentLink> PersonalThemeContentLink { get; set; }
+
         //имя базы по умолчанию: ILS.Domain.ILSContext. Если Entity Framework не обнаружит ее в СУБД, то попытается создать
         //но masterhost не даст нам программно создать новую базу - у нас есть только одна существующая под названием u273630
         //поэтому мы ее и переименовываем. При локальной разработке и отладке это неважно, но перед загрузкой на хостинг должно быть

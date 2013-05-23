@@ -11,6 +11,8 @@ namespace ILS.Domain
         
         public int MinResult { get; set; }
 
+        public bool IsComposite { get; set; }
+
         public virtual ICollection<TestRun> TestRuns { get; set; }
 
         public Test()

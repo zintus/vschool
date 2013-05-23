@@ -538,6 +538,215 @@ namespace ILS.Domain
             eege2009_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "1023", IfCorrect = false });            
             #endregion
 
+            #region LinkedInformatics
+            var li_course = new Course() { Name = "Связанная Информатика", Diagramm = ILSContextInitializer.DefaultDiagramm }; context.Course.Add(li_course);
+
+            var li_theme1 = new Theme() { OrderNumber = 1, Name = "Начальная тема" }; li_course.Themes.Add(li_theme1);
+            var li_theme2 = new Theme() { OrderNumber = 2, Name = "Математические основы" }; li_course.Themes.Add(li_theme2);
+            var li_theme3 = new Theme() { OrderNumber = 3, Name = "Итоговая тема" }; li_course.Themes.Add(li_theme3);
+
+            var li_lec1 = new Lecture() { OrderNumber = 1, Name = "Введение" }; li_theme1.ThemeContents.Add(li_lec1);
+            var li_lec2 = new Lecture() { OrderNumber = 1, Name = "Системы счисления" }; li_theme2.ThemeContents.Add(li_lec2);
+
+            li_lec1.Paragraphs.Add(new Paragraph() { OrderNumber = 1, Header = "1.1 Введение", Text = "Изучение информатики - чрезвычайно важный процесс" });
+            li_lec2.Paragraphs.Add(new Paragraph() { OrderNumber = 1, Header = "1.1 Системы счисления", Text = "Система счисления — символический метод записи чисел, представление чисел с помощью письменных знаков. Cистема счисления дает представления множества чисел (целых и/или вещественных), дает каждому числу уникальное представление (или, по крайней мере, стандартное представление), отражает алгебраическую и арифметическую структуру чисел. Системы счисления подразделяются на позиционные, непозиционные и смешанные. Чем больше основание системы счисления, тем меньшее количество разрядов (то есть записываемых цифр) требуется при записи числа в позиционных системах счисления." });
+
+            var li_test = new Test() { OrderNumber = 2, Name = "Математический тест", MinResult = 2 };
+            li_theme2.ThemeContents.Add(li_test);
+
+            var li_test_q = new Question()
+            {
+                OrderNumber = 1,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Корень десятой степени из 1024?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "102.4", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "2", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "1014", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "32", IfCorrect = false });
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 2,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "2 * (40 - 20 / 2) + 4 / 2"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "32", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "62", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "12", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "22", IfCorrect = false });
+
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 3,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Найдите корни уравнения: x^2 - 4x - 5 = 0"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "3", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "5", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "2", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "-1", IfCorrect = true });
+
+
+            li_test = new Test() { OrderNumber = 2, Name = "Тест по информатике", MinResult = 2 };
+            li_theme3.ThemeContents.Add(li_test);
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 1,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Бит это:"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Основная единица измерения количества информации", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "Не знаю", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "Нет такого слова", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Да", IfCorrect = false });
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 2,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Что из перечисленного - не язык программирования?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Java", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "C#", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "C++", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Coffee", IfCorrect = true });
+
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 3,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Какой из эти алгоритмов - алгоритм сортировки?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Алгоритм Форда — Фалкерсона", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "Алгоритм Малхотры — Кумара — Махешвари", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "Алгоритм Робинсона — Шенстеда", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Алгоритм Шелла", IfCorrect = true });
+
+
+
+            li_test = new Test() { OrderNumber = 3, Name = "Составной тест", MinResult = 4, IsComposite = true };
+            li_theme3.ThemeContents.Add(li_test);
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 6,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Бит это:"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Основная единица измерения количества информации", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "Не знаю", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "Нет такого слова", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Да", IfCorrect = false });
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 1,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Что из перечисленного - не язык программирования?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Java", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "C#", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "C++", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Coffee", IfCorrect = true });
+
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 2,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Какой из эти алгоритмов - алгоритм сортировки?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "Алгоритм Форда — Фалкерсона", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "Алгоритм Малхотры — Кумара — Махешвари", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "Алгоритм Робинсона — Шенстеда", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Алгоритм Шелла", IfCorrect = true });
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 4,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Корень десятой степени из 1024?"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "102.4", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "2", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "1014", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "32", IfCorrect = false });
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 3,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "2 * (40 - 20 / 2) + 4 / 2"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "32", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "62", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "12", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "22", IfCorrect = false });
+
+
+            li_test_q = new Question()
+            {
+                OrderNumber = 5,
+                PicQ = null,
+                IfPictured = false,
+                PicA = null,
+                Text = "Найдите корни уравнения: x^2 - 4x - 5 = 0"
+            };
+            li_test.Questions.Add(li_test_q);
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 1, Text = "3", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 2, Text = "5", IfCorrect = true });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 3, Text = "2", IfCorrect = false });
+            li_test_q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "-1", IfCorrect = true });
+
+
+
+            ThemeLink tl1 = context.ThemeLink.Add(new ThemeLink() { ParentTheme = li_theme1, LinkedTheme = li_theme2 });
+            li_theme1.OutputThemeLinks.Add(tl1);
+            ThemeLink tl2 = context.ThemeLink.Add(new ThemeLink() { ParentTheme = li_theme2, LinkedTheme = li_theme3 });
+            li_theme2.OutputThemeLinks.Add(tl2);
+
+            #endregion
+
+
+            
+
             #region Math
             /*var course2 = new Course() { Name = "Математика", Diagramm = ILSContextInitializer.DefaultDiagramm }; context.Course.Add(course2);
             var theme21 = new Theme() { OrderNumber = 1, Name = "Дифференцирование" }; course2.Themes.Add(theme21);
@@ -583,6 +792,7 @@ namespace ILS.Domain
                 q.AnswerVariants.Add(new AnswerVariant() { OrderNumber = 4, Text = "Ответ " + i + "4", IfCorrect = false });
 			}*/
 			#endregion
+
 
 		}
 

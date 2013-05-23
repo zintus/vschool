@@ -14,5 +14,12 @@ namespace ILS.Domain
         [ForeignKey("Theme")] public Guid Theme_Id { get; set; }
 
         public virtual Theme Theme { get; set; }
+
+        public virtual ICollection<ThemeContentLink> OutputThemeContentLinks { get; set; }
+
+        public ThemeContent()
+        {
+            OutputThemeContentLinks = new List<ThemeContentLink>();
+        }
 	}
 }
