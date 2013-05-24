@@ -55,7 +55,7 @@ if (isRussian)
 	ils.admin.profileEXP = 'Опыт';
 	ils.admin.profileAdmin = 'Администратор';
 	ils.admin.profileTeacher = 'Преподаватель';
-	ils.admin.profileStudent = 'Студент';
+	ils.admin.profileStudent = 'Слушатель';
 }
 
 Ext.define('UserModel', {
