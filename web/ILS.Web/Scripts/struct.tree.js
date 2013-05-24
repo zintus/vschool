@@ -90,8 +90,8 @@ tree.on('selectionchange', function (dataView, selections) {
                     success: function () {
                         var s1 = form_question.down("[name=picq_path]").getValue();
                         var s2 = form_question.down("[name=pica_path]").getValue();
-                        if (s1 == "") s1 = "http://localhost/ILS/Content/pics_service/EmptyImage.png";
-                        if (s2 == "") s2 = "http://localhost/ILS/Content/pics_service/EmptyImage.png";
+                        //if (s1 == "") s1 = "http://localhost/ILS/Content/pics_service/EmptyImage.png";
+                        //if (s2 == "") s2 = "http://localhost/ILS/Content/pics_service/EmptyImage.png";
                         form_question.down("[name=picq_preview]").setSrc(s1);
                         form_question.down("[name=pica_preview]").setSrc(s2);
                     }

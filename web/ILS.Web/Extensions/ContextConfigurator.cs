@@ -5,8 +5,9 @@ using System.Web;
 using Microsoft.Practices.Unity;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Configuration;
 using ILS.Domain;
+using ILS.Domain.Migrations;
+using System.Configuration;
 
 namespace ILS.Web.Extensions
 {
@@ -16,7 +17,7 @@ namespace ILS.Web.Extensions
 		{
 			var connStr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 			Database.DefaultConnectionFactory = new SqlConnectionFactory(connStr);
-			Database.SetInitializer<ILSContext>(new ILSContextInitializer());
+			Database.SetInitializer<ILSContext>(new MigrateDatabaseToLatestVersion<ILSContext, ILS.Domain.Migrations.Configuration>());
 
 			container.RegisterType<ILSContext>(new PerSessionLifetimeManager());
 		}

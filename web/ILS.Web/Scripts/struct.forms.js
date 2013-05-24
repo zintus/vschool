@@ -9,14 +9,39 @@ paragraph_piccount_change = function (newValue) {
         else form_paragraph.down('[name=pic' + i + ']').hide();    
 }
 
-paragraph_pic_listener = function () {
-    form_paragraph.down('[id=image_temp]').getEl().on('load', function () {
-        var w = this.dom.width; var h = this.dom.height;
+paragraph_pic_listener = function ()
+{
+    form_paragraph.down('[id=image_temp]').getEl().on('load', function ()
+    {
+        if (form_paragraph.hidden)
+            return;
+
+        var w = this.dom.width;
+        var h = this.dom.height;
+
         var ip = new Ext.window.Window({
-            closable: false, draggable: false, modal: true, resizable: false,
-            autoShow: true, layout: 'fit',
-            items: { xtype: 'image', src: form_paragraph.down('[id=image_temp]').src, width: w, height: h },
-            listeners: { render: function (c) { c.getEl().on('click', function () { ip.destroy(); }); } }
+            closable: false,
+            draggable: false,
+            modal: true,
+            resizable: false,
+            autoShow: true,
+            layout: 'fit',
+            items: {
+                xtype: 'image',
+                src: form_paragraph.down('[id=image_temp]').src,
+                width: w,
+                height: h
+            },
+            listeners: {
+                render: function (c)
+                {
+                    c.getEl().on('click',
+                        function ()
+                        {
+                            ip.destroy();
+                        });
+                }
+            }
         });
     });
 }

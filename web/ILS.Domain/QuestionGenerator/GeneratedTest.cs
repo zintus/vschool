@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using ILS.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ILS.Domain.QuestionGenerator
 {

@@ -69,22 +69,14 @@ var vpConfig = {
                     //которая подключает скрипт struct.js
                     //который нарисует нам редактор курсов, который мы и возжелали, кликнув по кнопке
                 }
-            }, {
-                xtype: 'button', scale: 'large', id: 'btn3',
-                iconAlign: 'top',
-                iconCls: 'main_struct',
-                margin: 10, width: 150,
-                handler: function () {
-                    window.location.href = link_struct;
-                }
-            },{
-                xtype: 'button', scale: 'large', id: 'btn4',
-                iconAlign: 'top',
-                iconCls: 'main_flowchart',
-                margin: 10, width: 150,
-                handler: function () {
-                    window.location.href = link_flowchart;
-                }
+            //},{
+            //    xtype: 'button', scale: 'large', id: 'btn4',
+            //    iconalign: 'top',
+            //    iconcls: 'main_flowchart',
+            //    margin: 10, width: 150,
+            //    handler: function () {
+            //        window.location.href = link_flowchart;
+            //    }
             },{
                 xtype: 'button', scale: 'large', id: 'btn5',
                 iconAlign: 'top',
@@ -123,10 +115,10 @@ Ext.onReady(function () {
         Ext.getCmp('btn2').setText('Виртуальный мир');
         if ((ifTeacher.toLowerCase() == 'true') || (ifAdmin.toLowerCase() == 'true')) {
             Ext.getCmp('btn3').setText('Редактор курсов');
-            Ext.getCmp('btn4').setText('Диаграмма выполнения');
+            //Ext.getCmp('btn4').setText('Диаграмма выполнения');
         } else {
             Ext.getCmp('btn3').getEl().hide();
-            Ext.getCmp('btn4').getEl().hide();
+            //Ext.getCmp('btn4').getEl().hide();
         }
         if (ifAdmin.toLowerCase() == 'true') Ext.getCmp('btn5').setText('Пользователи');
         else Ext.getCmp('btn5').getEl().hide();
@@ -140,10 +132,10 @@ Ext.onReady(function () {
         Ext.getCmp('btn2').setText('Virtual World');
         if ((ifTeacher.toLowerCase() == 'true') || (ifAdmin.toLowerCase() == 'true')) {
             Ext.getCmp('btn3').setText('Course Editor');
-            Ext.getCmp('btn4').setText('Workflow');
+            //Ext.getCmp('btn4').setText('Workflow');
         } else {
             Ext.getCmp('btn3').getEl().hide();
-            Ext.getCmp('btn4').getEl().hide();
+            //Ext.getCmp('btn4').getEl().hide();
         }
         if (ifAdmin.toLowerCase() == 'true') Ext.getCmp('btn5').setText('Users');
         else Ext.getCmp('btn5').getEl().hide();
