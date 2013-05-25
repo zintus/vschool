@@ -144,7 +144,7 @@ namespace ILS.Web.Controllers
             selectedUser.Email = email;
             selectedUser.FirstName = firstName;
             selectedUser.LastName = lastName;
-            if (isAdmin)
+            /*if (isAdmin)
             {
                 if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Admin") == 0)
                 {
@@ -172,7 +172,7 @@ namespace ILS.Web.Controllers
                     }
                 }
             }
-            /*if (isTeacher)
+            if (isTeacher)
             {
                 if (Enumerable.Count<Role>(selectedUser.Roles, x => x.Name == "Teacher") == 0)
                 {
