@@ -11,13 +11,13 @@ public class CharacterCust : MonoBehaviour
 	public GameObject AngryBot;
 	
 	public GameObject Alexis;
-	public GameObject Joan;
-	public GameObject Mia;
+	//public GameObject Joan;
+	//public GameObject Mia;
 	public GameObject Carl;
 	public GameObject Justin;
 	public GameObject Vincent;
-	public GameObject Solider;
-	public GameObject Golem;
+	//public GameObject Solider;
+	//public GameObject Golem;
 	
 	public GameObject Man;
 	public GameObject Woman;
@@ -74,7 +74,7 @@ public class CharacterCust : MonoBehaviour
 		};
 		massChar = new GameObject[]{Man, Woman, Boy, Girl, OldMan};
 		materials = new Material[]{mat0,mat1,mat2,mat3,mat4,mat5,mat6,mat7,mat8,mat9};
-		Characters = new GameObject[]{Lerpz, Alexis, Joan, Mia, Justin, Vincent,  Solider, Golem};
+		Characters = new GameObject[]{Lerpz, Alexis,AngryBot,/* Joan, Mia,*/Justin, Vincent, Carl /*Solider, Golem*/};
 		
 	}	
 	
@@ -129,21 +129,33 @@ public class CharacterCust : MonoBehaviour
 	
 	void ChangeCharecters(int direction)
 	{	
-		Fire.SetActive(true);		
-		if (curCharacter>0){Characters[curCharacter-direction].SetActive(false);}
+		Fire.SetActive(true);
+		Debug.Log("direcion " + direction);
+		if (curCharacter>0)
+		{
+			Characters[curCharacter-direction].SetActive(false);
+		}
 		if (direction == 1) {
 			Characters[curCharacter].transform.Translate(new Vector3(-2.0f, 0.0f, 0.0f));
-		curCharacter += direction;
-		Characters[curCharacter].transform.Translate(new Vector3(-2.0f, 0.0f, 0.0f));
+			curCharacter += direction;
+			Characters[curCharacter].transform.Translate(new Vector3(-2.0f, 0.0f, 0.0f));
 		}
-		else {Characters[curCharacter].transform.Translate(new Vector3(2.0f, 0.0f, 0.0f));
-		curCharacter += direction;
-		Characters[curCharacter].transform.Translate(new Vector3(2.0f, 0.0f, 0.0f));}
+		else 
+		{
+			Characters[curCharacter].transform.Translate(new Vector3(2.0f, 0.0f, 0.0f));
+			curCharacter += direction;
+			Characters[curCharacter].transform.Translate(new Vector3(2.0f, 0.0f, 0.0f));
+		}
 		
 		
-		if (curCharacter<Characters.Length) {Characters[curCharacter+direction].SetActive(true);}
-		if (curCharacter == Characters.Length) curCharacter = 0;
-		if (curCharacter == -1) curCharacter = Characters.Length - 1;
+		if (curCharacter<Characters.Length) 
+		{
+			Characters[curCharacter+direction].SetActive(true);
+		}
+		if (curCharacter == Characters.Length) 
+			curCharacter = 0;
+		if (curCharacter == -1) 
+			curCharacter = Characters.Length - 1;
 		
 		
 	}

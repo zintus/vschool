@@ -9,6 +9,7 @@ public class NetworkManagerScript : MonoBehaviour {
 	public string gameName = "3Ducation";
 	public GameObject Lerpz;
 	public GameObject AngryBot;
+	public GameObject Alexis;
 	public GameObject LerpzCamera;
 	public GameObject AngryBotCamera;
 	public GameObject cameraScript;
@@ -28,26 +29,12 @@ public class NetworkManagerScript : MonoBehaviour {
 		btnY = Screen.width * 0.05f;
 		btnW = Screen.width * 0.1f;
 		btnH = Screen.width * 0.1f;
+		Debug.Log("Avatar is " + CharacterCust.nameOfAvatar);
 		switch(CharacterCust.nameOfAvatar)
 		{
-			case "Lerpz": avatar = Lerpz; avatarCamera=LerpzCamera; break;
-			case "AngryBot": avatar = AngryBot; avatarCamera=AngryBotCamera; break;
-		}
-		/*if(GameObject.Find("Lerpz")) avatar = GameObject.Find("Lerpz");
-		if(GameObject.Find("Worker")) avatar = GameObject.Find("Worker");
-		if(GameObject.Find("AngryBot")) avatar = GameObject.Find("AngryBot");
-		if(GameObject.Find("OldMan")) avatar = GameObject.Find("OldMan");
-		if(GameObject.Find("Man")) avatar = GameObject.Find("Man");
-		if(GameObject.Find("Woman")) avatar = GameObject.Find("Woman");
-		if(GameObject.Find("Girl")) avatar = GameObject.Find("Girl");
-		if(GameObject.Find("Boy")) avatar = GameObject.Find("Boy");*/
-		if(avatar != null)
-		{
-			avatar.transform.position = new Vector3(-31.3F, 1F, -29.7F);
-			avatar.transform.Rotate(0,90,0);
-			avatar.GetComponent<ThirdPersonController>().enabled = true;
-			OrbitCam oc = cameraScript.GetComponent<OrbitCam>();
-			oc.target = avatarCamera.transform;
+			case "Lerpz": avatar = Lerpz; break;
+			case "AngryBot": avatar = AngryBot;  break;
+			case "AlexisPref": avatar = Alexis; break;
 		}
 	}
 	
@@ -95,6 +82,7 @@ public class NetworkManagerScript : MonoBehaviour {
 			if(GUI.Button(new Rect(btnX, btnY, btnW, btnH), "Start Server")){
 				Debug.Log("Starting Server");
 				StartServer();
+				Camera.mainCamera.GetComponent<OrbitCam>().target = avatar.transform;
 			}
 			
 			if(GUI.Button(new Rect(btnX, btnY * 1.2f + btnH, btnW, btnH), "Refresh Hosts")){
