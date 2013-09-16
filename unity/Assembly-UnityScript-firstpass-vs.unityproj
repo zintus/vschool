@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_3;UNITY_4_1;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PHYSICS;ENABLE_TERRAIN;ENABLE_CACHING;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_CLOTH;ENABLE_MOVIES;ENABLE_AUDIO;ENABLE_WWW;ENABLE_SHADOWS;ENABLE_DUCK_TYPING;UNITY_4_1_0;UNITY_4_1;ENABLE_PROFILER;UNITY_EDITOR;UNITY_TEAM_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -37,10 +37,10 @@
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity v4.1.0f4/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity v4.1.0f4/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -56,20 +56,31 @@
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
      <None Include="Assets\Customization\Clothes\Fur\Support\Fur.shader" />
+     <None Include="Assets\VideoRoom\Shaders\Fx\Additive.shader" />
+     <None Include="Assets\VideoRoom\VideoRoom\TextShader.shader" />
+     <None Include="Assets\VideoRoom\Shaders\BackgroundAndCharacters\ReflectiveBackgroundArbitrary.shader" />
      <None Include="Assets\Hallway\Shaders\ReflectiveBackgroundSelfIllumination.shader" />
+     <None Include="Assets\VideoRoom\Resources\HeightDepthOfField.shader" />
+     <None Include="Assets\VideoRoom\Resources\BlurPassesForDof.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
      <None Include="Assets\Plugins\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\VideoRoom\Shaders\BackgroundAndCharacters\Fallback.shader" />
      <None Include="Assets\Hallway\Shaders\glass.shader" />
      <None Include="Assets\Hallway\Shaders\AngryInclude.cginc" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Water4\Sources\Shaders\FX-SimpleWater4.shader" />
+     <None Include="Assets\VideoRoom\Shaders\Fx\Blend.shader" />
      <None Include="Assets\Customization\AngryBot\M-T-S\CharacterSelfIlluminationReflective.shader" />
+     <None Include="Assets\VideoRoom\Resources\ColoredNoise.shader" />
      <None Include="Assets\Hallway\Shaders\InterlacePatternAdditive.shader" />
      <None Include="Assets\Hallway\Shaders\InterlacePatternBlend.shader" />
      <None Include="Assets\Shared\Font\TextShader.shader" />
+     <None Include="Assets\VideoRoom\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
+     <None Include="Assets\VideoRoom\Resources\MobileBloom.shader" />
      <None Include="Assets\Plugins\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Reflective.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
      <None Include="Assets\Hallway\Shaders\ReflectiveBackgroundArbitrary.shader" />
+     <None Include="Assets\VideoRoom\Shaders\BackgroundAndCharacters\AlphaCutoutCheapFallback.shader" />
      <None Include="Assets\Standard Assets\Water (Pro Only)\Sources\Shaders\FX-Water.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
@@ -79,6 +90,7 @@
      <None Include="Assets\Hallway\Shaders\Additive.shader" />
      <None Include="Assets\Plugins\Font\TextShader.shader" />
      <None Include="Assets\Resources\Global.txt" />
+     <None Include="Assets\VideoRoom\VideoRoom\Font\TextShader.shader" />
      <None Include="Assets\Customization\Clothes\Fur\Support\FurHelpers.cginc" />
  <Reference Include="JsonFx.Json">
  <HintPath>Assets\Assemblies\JsonFx.Json.dll</HintPath>
