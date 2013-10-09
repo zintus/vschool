@@ -10,6 +10,12 @@ public class NetworkManagerScript : MonoBehaviour {
 	public GameObject Lerpz;
 	public GameObject AngryBot;
 	public GameObject Alexis;
+	public GameObject Jane;
+	public GameObject Carl;
+	public GameObject Mia;
+	public GameObject Justin;
+	public GameObject Vincent;
+	public GameObject Solider;	
 	public GameObject LerpzCamera;
 	public GameObject AngryBotCamera;
 	public GameObject cameraScript;
@@ -35,6 +41,12 @@ public class NetworkManagerScript : MonoBehaviour {
 			case "Lerpz": avatar = Lerpz; break;
 			case "AngryBot": avatar = AngryBot;  break;
 			case "AlexisPref": avatar = Alexis; break;
+			case "JanePref": avatar = Jane; break;
+			case "JustinPref": avatar = Justin; break;
+			case "VincentPref": avatar = Vincent; break;
+			case "Solider": avatar = Solider; break;
+			case "CarlPrefab": avatar = Carl; break;
+			case "MiaMia": avatar = Mia; break;
 		}
 	}
 	

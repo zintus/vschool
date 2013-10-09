@@ -165,7 +165,7 @@ public class BotControlScript : MonoBehaviour
 				
 				
 			}*/
-		if(Input.GetButtonDown("Fire4"))
+		/*if(Input.GetButtonDown("Fire4"))
 			{
 				anim.SetBool("Dancing", true);
 			
@@ -177,7 +177,7 @@ public class BotControlScript : MonoBehaviour
 				
 				
 			}
-		
+		*/
 		if(Input.GetButtonDown("Fire5"))
 			{
 				anim.SetBool("Slide", true);
