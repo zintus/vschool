@@ -42,9 +42,10 @@ function Start() {
 }
 
 function ZoomIn() {
-	PlayerAvatar = GameObject.Find("Bootstrap").GetComponent.<AttachController>().avatar;
+	PlayerAvatar = GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().avatar;
 	hint_visible = false;
-	PlayerAvatar.animation.Stop(); PlayerAvatar.SetActive(false);
+	//PlayerAvatar.animation.Stop();
+	PlayerAvatar.SetActive(false);
 	MainCam.enabled = false; MainCam.GetComponent(AudioListener).enabled = false;
 	StandCam.enabled = true; StandCam.GetComponent(AudioListener).enabled = true;
 	transform.parent.transform.Find("Menu").gameObject.SetActive(true);

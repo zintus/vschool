@@ -3,22 +3,19 @@ using System.Collections;
 
 public class NetworkManagerScript : MonoBehaviour {
 	
-	private GameObject avatar;
-	private GameObject avatarCamera;
+	public GameObject avatar;
 	public Transform spawnObject;
 	public string gameName = "3Ducation";
-	public GameObject Lerpz;
-	public GameObject AngryBot;
+	
+	//avatars
+	public GameObject Joan;
+	public GameObject Robot;
+	public GameObject Golem;
 	public GameObject Alexis;
-	public GameObject Jane;
-	public GameObject Carl;
 	public GameObject Mia;
 	public GameObject Justin;
 	public GameObject Vincent;
-	public GameObject Solider;	
-	public GameObject LerpzCamera;
-	public GameObject AngryBotCamera;
-	public GameObject cameraScript;
+	public GameObject Solder;	
 	
 	private string nameOfAvatar;
 	
@@ -35,18 +32,18 @@ public class NetworkManagerScript : MonoBehaviour {
 		btnY = Screen.width * 0.05f;
 		btnW = Screen.width * 0.1f;
 		btnH = Screen.width * 0.1f;
+		nameOfAvatar = CharacterCust.nameOfAvatar;
 		Debug.Log("Avatar is " + CharacterCust.nameOfAvatar);
-		switch(CharacterCust.nameOfAvatar)
+		switch(nameOfAvatar)
 		{
-			case "Lerpz": avatar = Lerpz; break;
-			case "AngryBot": avatar = AngryBot;  break;
-			case "AlexisPref": avatar = Alexis; break;
-			case "JanePref": avatar = Jane; break;
-			case "JustinPref": avatar = Justin; break;
-			case "VincentPref": avatar = Vincent; break;
-			case "Solider": avatar = Solider; break;
-			case "CarlPrefab": avatar = Carl; break;
-			case "MiaMia": avatar = Mia; break;
+			case "Robot": avatar = Robot; break;
+			case "Joan": avatar = Joan; break;
+			case "Alexis": avatar = Alexis; break;
+			case "Golem": avatar = Golem; break;
+			case "Justin": avatar = Justin; break;
+			case "Vincent": avatar = Vincent; break;
+			case "Solder": avatar = Solder; break;
+			case "Mia": avatar = Mia; break;
 		}
 	}
 	
@@ -92,9 +89,10 @@ public class NetworkManagerScript : MonoBehaviour {
 	void OnGUI(){
 		if(!Network.isClient && !Network.isServer) {
 			if(GUI.Button(new Rect(btnX, btnY, btnW, btnH), "Start Server")){
-				Debug.Log("Starting Server");
-				StartServer();
-				Camera.mainCamera.GetComponent<OrbitCam>().target = avatar.transform;
+				Debug.Log("Starting Server ");
+				StartServer();	
+				OrbitCam orbitCam = GameObject.Find("MainCamera").GetComponent("OrbitCam") as OrbitCam;
+				orbitCam.target = GameObject.Find(nameOfAvatar + "(Clone)").transform;
 			}
 			
 			if(GUI.Button(new Rect(btnX, btnY * 1.2f + btnH, btnW, btnH), "Refresh Hosts")){
