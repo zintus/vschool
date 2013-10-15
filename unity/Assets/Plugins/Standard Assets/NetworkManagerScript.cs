@@ -32,8 +32,8 @@ public class NetworkManagerScript : MonoBehaviour {
 		btnY = Screen.width * 0.05f;
 		btnW = Screen.width * 0.1f;
 		btnH = Screen.width * 0.1f;
-		nameOfAvatar = CharacterCust.nameOfAvatar;
-		Debug.Log("Avatar is " + CharacterCust.nameOfAvatar);
+		nameOfAvatar = "Robot"/*CharacterCust.nameOfAvatar*/;
+		Debug.Log("Avatar is " + nameOfAvatar);
 		switch(nameOfAvatar)
 		{
 			case "Robot": avatar = Robot; break;

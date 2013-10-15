@@ -46,7 +46,8 @@ function ZoomIn() {
 	hint_visible = false;
 	//PlayerAvatar.animation.Stop();
 	PlayerAvatar.SetActive(false);
-	MainCam.enabled = false; MainCam.GetComponent(AudioListener).enabled = false;
+	MainCam.enabled = false;
+	MainCam.GetComponent(AudioListener).enabled = false;
 	StandCam.enabled = true; StandCam.GetComponent(AudioListener).enabled = true;
 	transform.parent.transform.Find("Menu").gameObject.SetActive(true);
 	if (!data_loaded) {
@@ -63,8 +64,7 @@ function ZoomIn() {
 }
 
 function CourseDisplay(JSONStringFromServer : String) {
-	var res : CoursesNamesList = JsonFx.Json.JsonReader.Deserialize.<CoursesNamesList>(JSONStringFromServer);
-								
+	var res : CoursesNamesList = JsonFx.Json.JsonReader.Deserialize.<CoursesNamesList>(JSONStringFromServer);						
 	cl = res.coursesNames;
 	i = 1;
 	transform.parent.transform.Find("Menu/TextMain").GetComponent(TextMesh).text = cl[i-1].name;
@@ -74,7 +74,7 @@ function CourseDisplay(JSONStringFromServer : String) {
 
 function ZoomOut() {
 	escape_visible = false;
-	PlayerAvatar.SetActive(true); PlayerAvatar.animation.Play("idle");
+	//PlayerAvatar.SetActive(true); PlayerAvatar.animation.Play("idle");
 	MainCam.enabled = true; MainCam.GetComponent(AudioListener).enabled = true;
 	StandCam.enabled = false; StandCam.GetComponent(AudioListener).enabled = false;
 	transform.parent.transform.Find("Menu").gameObject.SetActive(false);	
