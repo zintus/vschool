@@ -86,12 +86,12 @@ function initializeArrays() {
 	var j : int; var k : int;
 	a = new List.<int[]>();
 	for (j=0; j<qText.length; j++) {
-		a[j] = new int[qAnsNum[j]];
+		a.Add(new int[qAnsNum[j]]);
 		for (k=0; k<qAnsNum[j]; k++)
 			a[j][k] = 0;
 	}
 	for (j=0; j<qText.length; j++)
-		t[j] = 0.00;
+		t.Add(0.00);
 }
 
 var Text_Header : GameObject;

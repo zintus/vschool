@@ -24,17 +24,17 @@ StandCam.GetComponent(AudioListener).enabled = false;
 function setIsBound(isBound: boolean)
 {
 	if (!PlayerAvatar)
-		PlayerAvatar = GameObject.Find("Bootstrap").GetComponent(AttachController).avatar;
+		PlayerAvatar = GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().avatar;
 		
 	PlayerAvatar.SetActive(!isBound);
-	if (isBound)
+	/*if (isBound)
 	{
 		PlayerAvatar.animation.Stop();
 	}
 	else
 	{
 		PlayerAvatar.animation.Play("idle");
-	}
+	}*/
 	
 	MainCam.enabled = !isBound; 
 	MainCam.GetComponent(AudioListener).enabled = !isBound;

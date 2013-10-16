@@ -45,7 +45,7 @@ function ZoomIn() {
 	PlayerAvatar = GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().avatar;
 	hint_visible = false;
 	//PlayerAvatar.animation.Stop();
-	PlayerAvatar.SetActive(false);
+	//PlayerAvatar.SetActive(false);
 	MainCam.enabled = false;
 	MainCam.GetComponent(AudioListener).enabled = false;
 	StandCam.enabled = true; StandCam.GetComponent(AudioListener).enabled = true;

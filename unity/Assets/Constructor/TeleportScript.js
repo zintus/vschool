@@ -15,7 +15,7 @@ var Player : GameObject;
 var be_ready_to_receive = false;
 
 function OnTriggerEnter () {
-	Player = GameObject.Find("Bootstrap").GetComponent.<AttachController>().avatar;
+	Player =  GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().avatar;
 	if (!be_ready_to_receive) {
 		//если мы - отправитель, значит, начинаем
 		Destination.GetComponent.<TeleportScript>().be_ready_to_receive = true;
@@ -25,7 +25,7 @@ function OnTriggerEnter () {
 		//полностью белым он станет через 30 кадров - ждем их (yield ждет один кадр, отсюда и цикл)
 		for (var i=0; i<30; i++) yield;
 		//отключаем скрипт управления и скрываем геометрию персонажа
-		Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = false;
+		//Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = false;
  	 	Player.SetActive(false);
 		//Player.transform.Find("rootJoint").gameObject.SetActive(false);
 		//теперь цилиндр снова будет становиться прозрачным, но персонаж уже будет невидимым
@@ -43,10 +43,10 @@ function OnTriggerEnter () {
 		//ручками поворачиваем камеру так, чтобы она смотрела на будку
 		GameObject.Find("MainCamera").GetComponent.<OrbitCam>().x = rt + 180;
 		//поворачиваем персонажа так, чтобы он стоял лицом к выходу из будки
-		if (rt == 0) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,1);
+		/*if (rt == 0) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,1);
 		else if (rt == 90) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(1,0,0);
 		else if ((rt==-90)||(rt==270)) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(-1,0,0);
-		else Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,-1);	
+		else Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,-1);*/	
 		
 		//включаем эффект, теперь у получателя								
 		Destination.transform.Find("TeleportEffect").animation.Play("TeleportEffect");
@@ -54,7 +54,7 @@ function OnTriggerEnter () {
 		//после того, как цилиндр достиг белого максимума, возвращаем персонажу видимость и управление
 		//Player.transform.Find("rootJoint").gameObject.SetActive(true);
 		Player.SetActive(true);
-		Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = true;
+		/*Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = true;*/
 		
 	} else {
 		//если мы получатель, значит, просто сбрасываем переменную

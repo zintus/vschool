@@ -26,7 +26,7 @@ function generateLecture (lecture : ThemeContent, theme_num1 : int, lec_num1 : i
 	var p : List.<Paragraph[]> = new List.<Paragraph[]>();
 	var k = 0;
 	for (i=0; i<7; i++) {
-		p[i] = new Paragraph[pnum[i]];
+		p.Add(new Paragraph[pnum[i]]);
 		for (var j=0; j<pnum[i]; j++) {
 			p[i][j] = lecture.paragraphs[k];
 			k++;

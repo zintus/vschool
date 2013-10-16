@@ -207,15 +207,18 @@ var sdlng : int;
 
 function CourseConstructor(JSONStringFromServer : String) {
 	var collected = GameObject.FindGameObjectsWithTag("Clone");
-	for (var z in collected) GameObject.Destroy(z);
+
+//	for (var z in collected) 
+//	  GameObject.Destroy(z);
 	sdlng = 0;
 	
 	var DATA : Course = JsonFx.Json.JsonReader.Deserialize.<Course>(JSONStringFromServer);
 	//JsonFx - это парсер, который лежит в ассетах в папке Assemblies
 	//он должен там просто быть, никаких других ссылок или связей настраивать не надо
-					
+			
 	//строим главный коридор и получаем массив ссылок на его кусочки
 	//c_main[0] - это начало, c_main[c_main.length-1] - конец, а все между - серединки
+
 	var c_main : GameObject[] = BuildMainCorridor(DATA.themes);
 	statDisplays = new GameObject[DATA.themes.Count + 1];
 	statDisplays[sdlng] = c_main[c_main.length-1].transform.Find("StatDisplay").gameObject; sdlng++;	
@@ -223,6 +226,8 @@ function CourseConstructor(JSONStringFromServer : String) {
 	var c_other : List.<GameObject[]> = new List.<GameObject[]>(); var y = 0;
 	for (var i=0; i<DATA.themes.Count; i++) {
 		//готовим статистику >>>
+		var objs : GameObject[];
+		c_other.Add(objs);
 		c_other[i] = BuildThemeCorridor(DATA.themes[i].contents, y);
 		statDisplays[sdlng] = c_other[i][c_other[i].length-1].transform.Find("StatDisplay").gameObject; sdlng++;
 		c_other[i][0].transform.Find("Timer").GetComponent.<TimerTheme>().theme_num = i;
@@ -287,11 +292,16 @@ function CourseConstructor(JSONStringFromServer : String) {
 }
 
 function BuildMainCorridor(themes : List.<Theme>) {
-	var c : List.<GameObject> = new List.<GameObject>(); c[0] = MainCorridorStart; var k = 0;
-	var a1 : GameObject; var a2 : GameObject;
+	var c : List.<GameObject> = new List.<GameObject>();
+	c.Add(new GameObject()); 
+	c[0] = MainCorridorStart; 
+	var k = 0;
+	var a1 : GameObject; 
+	var a2 : GameObject;
 	for (var i=0; i<themes.Count; i++) {
 		if (i % 2 == 0) {
 			k++;
+			c.Add(new GameObject()); 
 			c[k] = Instantiate(MainCorridorMiddle); c[k].tag = "Clone";
 			c[k].transform.Find("MonitorLeft/Text").GetComponent(TextMesh).text = themes[i].name;
 			a1 = c[k-1].transform.Find("Anchor_Next").gameObject;
@@ -306,7 +316,7 @@ function BuildMainCorridor(themes : List.<Theme>) {
 		Destroy(c[k].transform.Find("MonitorRight").gameObject);
 		Destroy(c[k].transform.Find("TeleportBooth_Right").gameObject);
 	}
-	
+	c.Add(new GameObject()); 
 	c[k+1] = Instantiate(MainCorridorEnd); c[k+1].tag = "Clone";
 	a1 = c[k].transform.Find("Anchor_Next").gameObject;
 	a2 = c[k+1].transform.Find("Anchor_Prev").gameObject;
@@ -326,13 +336,15 @@ function BuildMainCorridor(themes : List.<Theme>) {
 function BuildThemeCorridor(contents : List.<ThemeContent>, y : int) {
 	var c : List.<GameObject> = new List.<GameObject>(); var k = 0;
 	var a1 : GameObject; var a2 : GameObject;
-	
-	c[k] = Instantiate(ThemeCorridorStart); c[k].tag = "Clone";
+	c.Add(new GameObject()); 
+	c[k] = Instantiate(ThemeCorridorStart); 
+	c[k].tag = "Clone";
 	c[k].transform.position.y = y;
 	
 	for (var i=0; i<contents.Count; i++) {
 		if (i % 2 == 0) {
 			k++;
+			c.Add(new GameObject()); 
 			c[k] = Instantiate(ThemeCorridorMiddle); c[k].tag = "Clone";
 			c[k].transform.Find("MonitorLeft/Text").GetComponent(TextMesh).text = contents[i].name;
 			a1 = c[k-1].transform.Find("Anchor_Next").gameObject;
@@ -347,7 +359,7 @@ function BuildThemeCorridor(contents : List.<ThemeContent>, y : int) {
 		Destroy(c[k].transform.Find("MonitorRight").gameObject);
 		Destroy(c[k].transform.Find("TeleportBooth_Right").gameObject);
 	}
-	
+	c.Add(new GameObject()); 
 	c[k+1] = Instantiate(ThemeCorridorEnd); c[k+1].tag = "Clone";
 	a1 = c[k].transform.Find("Anchor_Next").gameObject;
 	a2 = c[k+1].transform.Find("Anchor_Prev").gameObject;
@@ -357,8 +369,10 @@ function BuildThemeCorridor(contents : List.<ThemeContent>, y : int) {
 	c[0].transform.Find("Timer").GetComponent(BoxCollider).size.z = (k+2)*6;
 	c[0].transform.Find("Timer").GetComponent(BoxCollider).center.z = (k+2)*6/2;
 	//устанавливаем скрипту, который будет считать время, ссылку на текст монитора, отображающий время
+	
+	/*Debug.Log(c[k+1].transform.Find("StatDisplay/TextTime").gameObject);
 	c[0].transform.Find("Timer").GetComponent.<TimerCourse>().TextTime =
-		c[k+1].transform.Find("StatDisplay/TextTime").gameObject;	
+		c[k+1].transform.Find("StatDisplay/TextTime").gameObject;	*/
 	
 	return c.ToArray();
 }

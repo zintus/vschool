@@ -109,6 +109,7 @@ function Update() {
 
 function Achievement(text:String, points:int) {	
 	count++;
+	achievementText.Add("");
 	achievementText[count-1] = text;
 	achievementPoints[count-1] = points;	
 	if (!displayAchievement) {
