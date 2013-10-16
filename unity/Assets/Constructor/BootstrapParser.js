@@ -370,9 +370,9 @@ function BuildThemeCorridor(contents : List.<ThemeContent>, y : int) {
 	c[0].transform.Find("Timer").GetComponent(BoxCollider).center.z = (k+2)*6/2;
 	//устанавливаем скрипту, который будет считать время, ссылку на текст монитора, отображающий время
 	
-	/*Debug.Log(c[k+1].transform.Find("StatDisplay/TextTime").gameObject);
-	c[0].transform.Find("Timer").GetComponent.<TimerCourse>().TextTime =
-		c[k+1].transform.Find("StatDisplay/TextTime").gameObject;	*/
+	Debug.Log(c[k+1].transform.Find("StatDisplay/TextTime").gameObject);
+	c[0].transform.Find("Timer").GetComponent.<TimerTheme>().TextTime =
+		c[k+1].transform.Find("StatDisplay/TextTime").gameObject;	
 	
 	return c.ToArray();
 }

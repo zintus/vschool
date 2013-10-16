@@ -15,7 +15,9 @@ var Player : GameObject;
 var be_ready_to_receive = false;
 
 function OnTriggerEnter () {
-	Player =  GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().avatar;
+	var nameOfAvatar = GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().nameOfAvatar;
+	Player = GameObject.Find(nameOfAvatar + "(Clone)");
+	Debug.Log("Destination.transform.position:" + Destination.transform.position);
 	if (!be_ready_to_receive) {
 		//если мы - отправитель, значит, начинаем
 		Destination.GetComponent.<TeleportScript>().be_ready_to_receive = true;
@@ -26,8 +28,8 @@ function OnTriggerEnter () {
 		for (var i=0; i<30; i++) yield;
 		//отключаем скрипт управления и скрываем геометрию персонажа
 		//Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = false;
- 	 	Player.SetActive(false);
-		//Player.transform.Find("rootJoint").gameObject.SetActive(false);
+ 	 	//Player.renderer = false;
+		//Player.transform.Find("Hips").gameObject.SetActive(false);
 		//теперь цилиндр снова будет становиться прозрачным, но персонаж уже будет невидимым
 		for (i=0; i<30; i++) yield;
 		
@@ -36,24 +38,30 @@ function OnTriggerEnter () {
 						
 		//собственно телепортация
 		//перемещаем персонажа в будку-получателя
+		Debug.Log("Teleport Avatar:" + Player.name);
+		Debug.Log("Player.transform.position:" + Player.transform.position);
+		Debug.Log("Destination.transform.position:" + Destination.transform.position);
 		Player.transform.position = Destination.transform.position;
-		if (Player.name == "Worker") Player.transform.position.y += 1; //а то рабочий чет проваливается вниз
+		Debug.Log("Teleporting...");
+
+		Debug.Log("Player.transform.position:" + Player.transform.position);
+		//if (Player.name == "Worker") Player.transform.position.y += 1; //а то рабочий чет проваливается вниз
 		//запоминаем угол, на который повернута будка-получатель
 		var rt = Mathf.Round(Destination.transform.localRotation.eulerAngles.y);
 		//ручками поворачиваем камеру так, чтобы она смотрела на будку
-		GameObject.Find("MainCamera").GetComponent.<OrbitCam>().x = rt + 180;
+		//GameObject.Find("MainCamera").GetComponent.<OrbitCam>().x = rt + 180;
 		//поворачиваем персонажа так, чтобы он стоял лицом к выходу из будки
-		/*if (rt == 0) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,1);
-		else if (rt == 90) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(1,0,0);
-		else if ((rt==-90)||(rt==270)) Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(-1,0,0);
-		else Player.GetComponent.<ThirdPersonControllerLerpz>().moveDirection = Vector3(0,0,-1);*/	
+		if (rt == 0) Player.transform.TransformDirection(new Vector3(0,0,1));
+		else if (rt == 90) Player.transform.TransformDirection(new Vector3(1,0,0));
+		else if ((rt==-90)||(rt==270)) Player.transform.TransformDirection(new Vector3(-1,0,0));
+		else Player.transform.TransformDirection(new Vector3(0,0,-1));	
 		
 		//включаем эффект, теперь у получателя								
 		Destination.transform.Find("TeleportEffect").animation.Play("TeleportEffect");
 		for (i=0; i<30; i++) yield;
 		//после того, как цилиндр достиг белого максимума, возвращаем персонажу видимость и управление
 		//Player.transform.Find("rootJoint").gameObject.SetActive(true);
-		Player.SetActive(true);
+		//Player.renderer = true;
 		/*Player.GetComponent.<ThirdPersonControllerLerpz>().enabled = true;*/
 		
 	} else {

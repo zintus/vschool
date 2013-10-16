@@ -17,7 +17,7 @@ public class NetworkManagerScript : MonoBehaviour {
 	public GameObject Vincent;
 	public GameObject Solder;	
 	
-	private string nameOfAvatar;
+	public string nameOfAvatar;
 	
 	private bool refreshing;
 	private HostData[] hostData;
