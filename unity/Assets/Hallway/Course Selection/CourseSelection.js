@@ -56,7 +56,7 @@ function ZoomIn() {
 		
 		//БОЛЬШОЙ РУБИЛЬНИК
 		CourseDisplay(JSONTestString);
-		//Application.ExternalCall("LoadCoursesList");
+		Application.ExternalCall("LoadCoursesList");
 		
 	} else {
 		escape_visible = true;
@@ -137,7 +137,7 @@ function Update() {
 		src1.CourseConstructor(src1.JSONTestString);
 		var src2 : StatisticParser = GameObject.Find("Bootstrap").GetComponent.<StatisticParser>();
 		src2.StatisticDisplay(src2.JSONTestString);
-		//Application.ExternalCall("LoadCourseData", cl[i-1].id);
+		Application.ExternalCall("LoadCourseData", cl[i-1].id);
 				
 		dieSignals.SendSignals(this);
 		this.renderer.material = NewScreen;
