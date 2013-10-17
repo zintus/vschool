@@ -1,0 +1,63 @@
+   .toppanelleft {
+	width: 104px; 
+	height: 34px;
+	position: relative;
+	float: left;
+	left: 0%;
+   }
+   .toppanelcenter {
+	width: 92px; 
+	height: 30px;
+	top: 4px;
+	position: relative;
+	float: left;
+   }
+   .toppanelright {
+	width: 92px; 
+	height: 30px;
+	position: relative;
+	float: left;
+	top: 4px;
+	right: 0%;
+   }
+   .unityarea {
+	width: 809px; 
+	height: 400px;
+	top: 97px;
+	position: absolute;
+	background: url(sprites/black_back.jpg) no-repeat;
+	overflow: hidden;
+	left: 50%;
+	margin-left: -413px;
+   }
+   .renderarea {
+	width: 809px; 
+	height: 400px;
+	top: 97px;
+	position: absolute;
+	overflow: hidden;
+	left: 50%;
+	margin-left: -413px;
+   }
+   .doorleft {
+	width: 446px; 
+	height: 508px;
+	top: -15px;
+	position: absolute;
+	left: -53px;
+   }
+   .doorright {
+	width: 446px; 
+	height: 508px;
+	top: -15px;
+	position: absolute;
+	left: 396px;
+   }
+   .enter {
+	width: 352px; 
+	height: 352px;
+	top: 25px;
+	position: absolute;
+	left: 50%;
+	margin-left: -176px;
+   }
