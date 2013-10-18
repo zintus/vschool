@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "3Ducation | Виртуальный мир";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@section additionalCSS {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/about.css")"/>
+}
+@section scripts{
+     <script type="text/javascript">
+         function change() {
+             var screen = document.getElementById('slider_screen');
+             var authors = document.getElementById('slider_authors');
+             if (screen.style.display == "block") {
+                 authors.style.display = "block";
+                 screen.style.display = "none";
+             }
+             else {
+                 screen.style.display = "block";
+                 authors.style.display = "none";
+             }
+         }
+    </script> 
+}
+@section topPanel{
+    <div class="toppanel">
+			<div class="toppanelleft">
+				<a href = "render"><img src="/Content/Sprites//button_main_ia.png"></a>
+			</div>
+			<div class="toppanelcenter">
+				<a href = "about"><img src="/Content/Sprites//button_about_a.png"></a>
+			</div>
+			<div class="toppanelright">
+				<a href = "contacts"><img src="/Content/Sprites//button_contact_ia.png"></a>
+			</div>
+		</div>
+}
+@section renderArea{
+    <div class="renderarea">
+	</div>
+}
+@section sliderArea{
+    <div class="slider_screen" id = "slider_screen">
+			<div class="slider_screen_button_screen">
+				<img src="/Content/Sprites//slider_screen_button_screen.png">
+			</div>
+			<div class="slider_screen_button_authors">
+				<a onclick="change()"><img src="/Content/Sprites//slider_screen_button_authors.png"></a>
+			</div>
+			<div class="slider_screen_frame">
+				<img src="/Content/Sprites//slider_screen_frame.png">
+			</div>
+			<div class="slider_screen_button_authors" onclick="change()">
+			</div>
+			<div class="slider_screen_arrow_left">
+				<img src="/Content/Sprites//arrow_left_ia.png">
+			</div>
+			<div class="slider_screen_arrow_right">
+				<img src="/Content/Sprites//arrow_right_ia.png">
+			</div>
+		</div>
+		<div class="slider_authors" id = "slider_authors">
+			<div class="slider_authors_button_authors">
+				<img src="/Content/Sprites//slider_authors_button_authors.png">
+			</div>
+			<div class="slider_authors_button_screen">
+				<img src="/Content/Sprites//slider_authors_button_screen.png" >
+			</div>
+			<div class="slider_authors_frame">
+				<img src="/Content/Sprites//slider_authors_frame.png">
+			</div>
+			<div class="slider_authors_button_screen" onclick="change()">
+			</div>
+			<div class="slider_authors_arrow_left">
+			</div>
+			<div class="slider_authors_arrow_right">
+			</div>
+		</div>
+}
+

@@ -1,7 +1,11 @@
 ﻿@{
     ViewBag.Title = "3Ducation | Виртуальный мир";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
+@section additionalCSS {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/user.css")"/>
+}
+
 
 @section scripts{
     <script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
@@ -15,7 +19,228 @@
         link_unitysave = '@Url.Action("UnitySave", "Render")';
         link_unitysaveRPG = '@Url.Action("UnitySaveRPG", "Render")';
         link_unitytest = '@Url.Action("UnityTest", "Render")';
+
+        var virtual_world = new Ext.panel.Panel({
+        });
+        var embedded = false;
+        var width; var height;
+
+        function startUnityPlayer() {
+            if (!embedded && typeof unityObject != "undefined") {
+                width = 809;
+                height = 400;
+                if (width < 200 || height < 200) return;
+                embedded = true;
+
+                //это для того, чтобы в Юнити по нажатию правой кнопки не вылезало контекстное меню
+                var params = { disableContextMenu: true };
+                unityObject.embedUnity("unityPlayer", link_unityfile, width, height, params);
+                document.getElementById("unityPlayer").style.position = "absolute";
+                document.getElementById("unityPlayer").style.left = "50%";
+                document.getElementById("unityPlayer").style.marginLeft = "-413px";
+                document.getElementById("unityPlayer").style.top = "97px";
+
+                if (document.getElementById("unityPlayer").childNodes[0].tagName == "DIV") {
+                    document.getElementById("unityPlayer").childNodes[0].style.width = "500px";
+                    document.getElementById("unityPlayer").childNodes[0].childNodes[0].style.height = "125px";
+                    document.getElementById("unityPlayer").childNodes[0].childNodes[0].style.top = "-62px";
+                    document.getElementById("unityPlayer").childNodes[0].childNodes[0].title = "";
+                    document.getElementById("getunity").width = 500;
+                    document.getElementById("getunity").height = 125;
+                    document.getElementById("getunity").src = getUnityImage;
+                }
+
+
+            }
+
+
+        }
+
     </script>
+
+    <script type="text/javascript">
+        var img;
+        var canvas;
+        var frame = 0;
+        var ITHASBEGUN = false;
+        window.onload = function () {
+            // получаем картинку
+            var index = frame + 1;
+            image = document.getElementById("enter" + index);
+            //создаем переменную под новую картинку
+            img = new Image();
+            // url картинки
+            img.src = image.src;
+
+            // получаем canvas элемент
+
+            canvas = document.getElementById("rotate");
+            // устанавливем размеры canvas элемента исходя из размеров самого изображения
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            // создаем переменную для работы с canvas
+            img.context = canvas.getContext("2d");
+            img.canvas = canvas;
+            img.radians = Math.PI / 180;
+            //canvas_rotate.call(img, 0);
+            //
+            //enter();
+
+        }
+
+        function canvas_rotate(rotate) {
+            // save the current co-ordinate system
+            // before we screw with it
+            this.context.save();
+
+            // move to the middle of where we want to draw our image
+            this.context.translate(this.width / 2, this.height / 2);
+
+            // rotate around that point, converting our
+            // angle from degrees to radians
+            this.context.rotate(rotate * this.radians);
+
+            // draw it up and to the left by half the width
+            // and height of the image
+            this.context.drawImage(this, -(this.width / 2), -(this.height / 2));
+
+            // and restore the co-ords to how they were when we began
+            this.context.restore();
+        }
+
+        function enter_click() {
+            ITHASBEGUN = true;
+            var left = 0; // начальное значение
+            var angle = 0;
+            var eleft = 228;
+            clearInterval(enterTimer);  
+            for (var i = 1; i < 14; i++) {
+                document.getElementById("enter" + i).style.display = "none";
+            }
+                function move() { // функция для отрисовки
+                if (angle <= 90) {
+                    img.context.clearRect(0, 0, img.width, img.height);
+                    // поварачиваем картинку и рисуем ее
+                    canvas_rotate.call(img, angle);
+                    angle += 10;
+                }
+                else {
+
+                    left -= 30;
+                    eleft -= 30;
+                    document.getElementById('doorl').style.left = left + 'px';
+                    document.getElementById('doorr').style.left = 406 - left + 'px';
+                    document.getElementById('container').style.left = eleft + 'px';
+                    if (left <= -700) {
+                        clearInterval(timer); // завершить анимацию
+                        mainDoors.style.display = 'none';
+                        startUnityPlayer();
+                    }
+                }
+            }
+            var timer = setInterval(move, 50) // рисовать каждые 10мс
+        }
+
+        var enterTimer;
+
+        function enter_animate() {
+            if (ITHASBEGUN) {
+                return;    
+            }
+            clearInterval(enterTimer); 
+            var frames = document.getElementById("container").children;
+            function move() {
+                if (ITHASBEGUN) {
+                    return;
+                }
+                frames[frame].style.display = "none";
+                frame++;
+                if (frame == 13) {
+                    frame = 7;
+                }
+                console.log(frame);
+                frames[frame].style.display = "block";
+                
+            }
+            enterTimer = setInterval(move, 70);
+        }
+
+        function enter_stop() {
+            if (ITHASBEGUN) {
+                return;
+            }
+            clearInterval(enterTimer);
+            var frames = document.getElementById("container").children;
+            function move() {
+                if (ITHASBEGUN) {
+                    return;
+                }
+                if (frame < 1) {
+                    clearInterval(enterTimer);
+                    frame = 1;    
+                }
+                frames[frame].style.display = "none";
+                frame--;
+                console.log(frame);
+                frames[frame].style.display = "block";
+
+            }
+            enterTimer = setInterval(move, 70);
+        }
+    </script>
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/render.js")"></script>
 }
 
+@section topPanel{
+    <div class="toppanel">
+			<div class="toppanelleft">
+				<a href = "render"><img src="/Content/Sprites//button_main_a.png"></a>
+			</div>
+			<div class="toppanelcenter">
+				<a href = "about"><img src="/Content/Sprites//button_about_ia.png"></a>
+			</div>
+			<div class="toppanelright">
+				<a href = "contacts"><img src="/Content/Sprites//button_contact_ia.png"></a>
+			</div>
+		</div>
+}
+@section renderArea{
+    <div class="unityarea" id="unityPlayer">
+        </div>
+		<div class="renderarea" id="mainDoors">
+			<div class="doorleft" id = "doorl">
+				<img src="/Content/Sprites//door_left.jpg">
+			</div>
+			<div class="doorright" id = "doorr">
+				<img src="/Content/Sprites//door_right.jpg">
+			</div>
+			<div class="enter" id = "container">
+				<img src="/Content/Sprites//enter//enter1.png"  id = "enter1" style = "display:block">
+                <img src="/Content/Sprites//enter//enter2.png"  id = "enter2" style = "display:none">
+                <img src="/Content/Sprites//enter//enter3.png"  id = "enter3" style = "display:none">
+                <img src="/Content/Sprites//enter//enter4.png"  id = "enter4" style = "display:none">
+                <img src="/Content/Sprites//enter//enter5.png"  id = "enter5" style = "display:none">
+                <img src="/Content/Sprites//enter//enter6.png"  id = "enter6" style = "display:none">
+                <img src="/Content/Sprites//enter//enter7.png"  id = "enter7" style = "display:none">
+                <img src="/Content/Sprites//enter//enter8.png"  id = "enter8" style = "display:none">
+                <img src="/Content/Sprites//enter//enter9.png"  id = "enter9" style = "display:none">
+                <img src="/Content/Sprites//enter//enter10.png"  id = "enter10" style = "display:none">
+                <img src="/Content/Sprites//enter//enter11.png"  id = "enter11" style = "display:none">
+                <img src="/Content/Sprites//enter//enter12.png"  id = "enter12" style = "display:none">
+                <img src="/Content/Sprites//enter//enter13.png"  id = "enter13" style = "display:none">
+				<canvas id="rotate"></canvas>
+			</div>
+            <div class="enter" id = "container" onclick = "enter_click()" onmouseover = "enter_animate()" onmouseout = "enter_stop()">
+            </div>
+            <div class="renderOverlayT">
+			</div>
+			<div class="renderOverlayL">
+			</div>
+			<div class="renderOverlayR">
+			</div>
+			<div class="renderOverlayB">
+			</div>
+		</div>
+}

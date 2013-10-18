@@ -15,17 +15,19 @@
     <AssemblyName>ILS.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UpgradeBackupLocation />
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,10 +56,10 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
-      <HintPath>..\..\..\..\Документы\Моя папка\Диплом\program\HtmlAgilityPack.1.4.0\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>..\..\..\..\Документы\Моя папка\Диплом\program\DotNetZipLib-DevKit-v1.9\zip-v1.9\Debug\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -76,7 +78,7 @@
       <HintPath>..\packages\Unity.2.0\lib\20\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Omu.ValueInjecter">
-      <HintPath>..\packages\ValueInjecter\Omu.ValueInjecter.dll</HintPath>
+      <HintPath>..\packages\valueinjecter.2.3.3\lib\net35\Omu.ValueInjecter.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -100,8 +102,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeologyController.cs" />
     <Compile Include="Controllers\OpenIDController.cs" />
@@ -126,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\about.css" />
+    <Content Include="Content\contacts.css" />
     <Content Include="Content\icons.css" />
     <Content Include="Content\icons\add.png" />
     <Content Include="Content\icons\browseFiles.png" />
@@ -164,6 +170,110 @@
     <Content Include="Content\pics_service\Logotype.jpg" />
     <Content Include="Content\pics_service\Robot.jpg" />
     <Content Include="Content\pics_service\UnitySetup.png" />
+    <Content Include="Content\Sprites\3ducation.gif" />
+    <Content Include="Content\Sprites\3ducation.swf" />
+    <Content Include="Content\Sprites\3ducation2.gif" />
+    <Content Include="Content\Sprites\arrow_left_a.png" />
+    <Content Include="Content\Sprites\arrow_left_ia.png" />
+    <Content Include="Content\Sprites\arrow_right_a.png" />
+    <Content Include="Content\Sprites\arrow_right_ia.png" />
+    <Content Include="Content\Sprites\background.png" />
+    <Content Include="Content\Sprites\black_back.jpg" />
+    <Content Include="Content\Sprites\button_about_a.png" />
+    <Content Include="Content\Sprites\button_about_ia.png" />
+    <Content Include="Content\Sprites\button_contact_a.png" />
+    <Content Include="Content\Sprites\button_contact_ia.png" />
+    <Content Include="Content\Sprites\button_main_a.png" />
+    <Content Include="Content\Sprites\button_main_ia.png" />
+    <Content Include="Content\Sprites\button_play.png" />
+    <Content Include="Content\Sprites\contacts_back.jpg" />
+    <Content Include="Content\Sprites\demo.png" />
+    <Content Include="Content\Sprites\demo\demo %281%29.png" />
+    <Content Include="Content\Sprites\demo\demo %2810%29.png" />
+    <Content Include="Content\Sprites\demo\demo %2811%29.png" />
+    <Content Include="Content\Sprites\demo\demo %2812%29.png" />
+    <Content Include="Content\Sprites\demo\demo %282%29.png" />
+    <Content Include="Content\Sprites\demo\demo %283%29.png" />
+    <Content Include="Content\Sprites\demo\demo %284%29.png" />
+    <Content Include="Content\Sprites\demo\demo %285%29.png" />
+    <Content Include="Content\Sprites\demo\demo %286%29.png" />
+    <Content Include="Content\Sprites\demo\demo %287%29.png" />
+    <Content Include="Content\Sprites\demo\demo %288%29.png" />
+    <Content Include="Content\Sprites\demo\demo %289%29.png" />
+    <Content Include="Content\Sprites\diploma.png" />
+    <Content Include="Content\Sprites\door_left.jpg" />
+    <Content Include="Content\Sprites\door_right.jpg" />
+    <Content Include="Content\Sprites\door_s_left.jpg" />
+    <Content Include="Content\Sprites\door_s_right.jpg" />
+    <Content Include="Content\Sprites\enter.png" />
+    <Content Include="Content\Sprites\enter2.png" />
+    <Content Include="Content\Sprites\enter\enter1.png" />
+    <Content Include="Content\Sprites\enter\enter10.png" />
+    <Content Include="Content\Sprites\enter\enter11.png" />
+    <Content Include="Content\Sprites\enter\enter12.png" />
+    <Content Include="Content\Sprites\enter\enter13.png" />
+    <Content Include="Content\Sprites\enter\enter2.png" />
+    <Content Include="Content\Sprites\enter\enter3.png" />
+    <Content Include="Content\Sprites\enter\enter4.png" />
+    <Content Include="Content\Sprites\enter\enter5.png" />
+    <Content Include="Content\Sprites\enter\enter6.png" />
+    <Content Include="Content\Sprites\enter\enter7.png" />
+    <Content Include="Content\Sprites\enter\enter8.png" />
+    <Content Include="Content\Sprites\enter\enter9.png" />
+    <Content Include="Content\Sprites\link.png" />
+    <Content Include="Content\Sprites\logo.png" />
+    <Content Include="Content\Sprites\Logo.swf" />
+    <Content Include="Content\Sprites\main.png" />
+    <Content Include="Content\Sprites\main2.png" />
+    <Content Include="Content\Sprites\medal.png" />
+    <Content Include="Content\Sprites\moodle.jpg" />
+    <Content Include="Content\Sprites\page_main.png" />
+    <Content Include="Content\Sprites\play.png" />
+    <Content Include="Content\Sprites\play\noblink\play %281%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %2810%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %2811%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %2812%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %282%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %283%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %284%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %285%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %286%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %287%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %288%29.png" />
+    <Content Include="Content\Sprites\play\noblink\play %289%29.png" />
+    <Content Include="Content\Sprites\play\play %281%29.png" />
+    <Content Include="Content\Sprites\play\play %2810%29.png" />
+    <Content Include="Content\Sprites\play\play %2811%29.png" />
+    <Content Include="Content\Sprites\play\play %2812%29.png" />
+    <Content Include="Content\Sprites\play\play %282%29.png" />
+    <Content Include="Content\Sprites\play\play %283%29.png" />
+    <Content Include="Content\Sprites\play\play %284%29.png" />
+    <Content Include="Content\Sprites\play\play %285%29.png" />
+    <Content Include="Content\Sprites\play\play %286%29.png" />
+    <Content Include="Content\Sprites\play\play %287%29.png" />
+    <Content Include="Content\Sprites\play\play %288%29.png" />
+    <Content Include="Content\Sprites\play\play %289%29.png" />
+    <Content Include="Content\Sprites\renderOverlayB2.png" />
+    <Content Include="Content\Sprites\renderOverlayBL.png" />
+    <Content Include="Content\Sprites\renderOverlayBR.png" />
+    <Content Include="Content\Sprites\renderOverlayL2.png" />
+    <Content Include="Content\Sprites\renderOverlayR2.png" />
+    <Content Include="Content\Sprites\renderOverlayT2.png" />
+    <Content Include="Content\Sprites\renderOverlayTL.png" />
+    <Content Include="Content\Sprites\renderOverlayTR.png" />
+    <Content Include="Content\Sprites\shade_bottom.png" />
+    <Content Include="Content\Sprites\shade_left.png" />
+    <Content Include="Content\Sprites\shade_right.png" />
+    <Content Include="Content\Sprites\shade_top.png" />
+    <Content Include="Content\Sprites\shi.jpg" />
+    <Content Include="Content\Sprites\slider_authors_button_authors.png" />
+    <Content Include="Content\Sprites\slider_authors_button_screen.png" />
+    <Content Include="Content\Sprites\slider_authors_frame.png" />
+    <Content Include="Content\Sprites\slider_screen_button_authors.png" />
+    <Content Include="Content\Sprites\slider_screen_button_screen.png" />
+    <Content Include="Content\Sprites\slider_screen_frame.png" />
+    <Content Include="Content\user-common.css" />
+    <Content Include="Content\user.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\ext\bootstrap.js" />
     <Content Include="Scripts\ext\ext-all-debug-w-comments.js" />
@@ -3183,7 +3293,7 @@
     <Content Include="Views\Shared\NotLoggedInLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\Masterhost.pubxml" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <Content Include="Scripts\ext\resources\ext-theme-access\Readme.md" />
@@ -3192,12 +3302,16 @@
     <Content Include="Scripts\ext\resources\ext-theme-gray\Readme.md" />
     <Content Include="Scripts\ext\resources\ext-theme-neptune\Readme.md" />
     <Content Include="Scripts\ext\version.properties" />
+    <None Include="Properties\PublishProfiles\ssau.ru.pubxml" />
     <None Include="UnityDeploy\Main.unity3d" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Struct\Index.cshtml" />
     <Content Include="Views\Render\Index.cshtml" />
     <Content Include="Views\Ideology\Index.cshtml" />
     <Content Include="Views\OpenID\Index.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
