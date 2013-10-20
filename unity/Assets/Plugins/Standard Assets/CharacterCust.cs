@@ -30,22 +30,60 @@ public class CharacterCust : MonoBehaviour
 	public GameObject Observation;
 	
 	int curCharacter = 0;
+	int curEffect = 0;
 	bool closerCamera = false;
 
 	GameObject [] characters;
+	GameObject [] effects;
 	
 	// Use this for initialization
 	void Start () 
 	{	
-		characters = new GameObject[]{Robot, Joan, Alexis, Justin, Vincent, Solider, Mia};
+		characters = new GameObject[]{Joan, Alexis, Justin, Vincent, Solider, Mia, Robot};
+		effects = new GameObject[]{Fire, Sparks, Explosions, Fireworks};
 		ChangeCharecters(curCharacter);
+		ChangeEffects(curEffect);
 	}	
+	
+	void ZoomButton(int wRegularButton, int wBigButton, int hUnit)
+	{
+		GUILayout.BeginHorizontal();
+		if (!closerCamera)
+		{
+			if (GUILayout.Button("Приблизить", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)))
+			{
+				Observation.transform.Find("MainCamera").localPosition = new Vector3(2,3,-3);
+				Observation.transform.Find("MainCamera").eulerAngles = new Vector3(0,325,0);
+				closerCamera = true;
+			}
+		} else {
+			Observation.transform.Find("MainCamera").RotateAround(
+				Observation.transform.position - new Vector3(0,0,0.8f),
+				Vector3.up,
+				-20*Time.deltaTime
+			);
+			if (GUILayout.Button("Отдалить", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)))
+			{
+				Observation.transform.Find("MainCamera").localPosition = new Vector3(2,3,-3);
+				Observation.transform.Find("MainCamera").eulerAngles = new Vector3(0,325,0);
+				closerCamera = false;
+			}
+		}
+		GUILayout.EndHorizontal();
+	}
 	
 	void commonButtons(int wRegularButton, int wBigButton, int hUnit)
 	{
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("<", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)) && curCharacter > 0)
+		{
             ChangeCharecters(--curCharacter);
+			if(curEffect == 0)
+				curEffect = effects.Length - 1;
+			else
+				curEffect--;
+			ChangeEffects(curEffect);
+		}
 		
         if(GUILayout.Button(Strings.Get("Go"), GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)))
 		{
@@ -53,10 +91,16 @@ public class CharacterCust : MonoBehaviour
 			Debug.Log(nameOfAvatar);			
 			Application.LoadLevel("world");
 		}
-        if (GUILayout.Button(">", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)) && curCharacter < characters.Length - 1)
+        if (GUILayout.Button(">", GUILayout.Width(wRegularButton), GUILayout.Height(hUnit)) && (curCharacter < characters.Length - 1))
+		{
            ChangeCharecters(++curCharacter);
+			if(curEffect == effects.Length - 1)
+				curEffect = 0;
+			else
+				curEffect++;
+			ChangeEffects(curEffect);
+		}
        GUILayout.EndHorizontal();
-		
 	}
 		
 	void OnGUI()
@@ -76,11 +120,19 @@ public class CharacterCust : MonoBehaviour
 			int y = (Screen.height/2) - (blockHeight / 2);
 			hUnit /= 2;
 			
-			GUILayout.BeginArea(new Rect(x, y , blockWidth, blockHeight));
+			GUILayout.BeginArea(new Rect(x, y , blockWidth + 15, blockHeight));
 			
 			commonButtons(wRegularButton, wBigButton, hUnit);
 			
 			GUILayout.EndArea();
+			
+			GUILayout.BeginArea(new Rect(x + wRegularButton + 5, y - hUnit - 5, blockWidth, blockHeight));
+			
+			ZoomButton(wRegularButton, wBigButton, hUnit);
+			
+			GUILayout.EndArea();
+			
+			
 		}
 	}
 	
@@ -91,6 +143,13 @@ public class CharacterCust : MonoBehaviour
 		for(int i = 0; i < characters.Length; i++)
 				characters[i].SetActive(false);
 		characters[curCharacter].SetActive(true);
+	}
+	
+	void ChangeEffects(int curEffect)
+	{
+		for(int i = 0; i < effects.Length; i++)
+				effects[i].SetActive(false);
+		effects[curEffect].SetActive(true);
 	}
 	
 
