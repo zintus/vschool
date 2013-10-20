@@ -24,7 +24,7 @@ function Update () {
 				
 				animation_number = 3;
 				info = transform.parent.transform.Find("Info").gameObject;
-				info.SetActive(true);
+				info.SetActiveRecursively(true);
 				info.transform.Find("Text").GetComponent(TextMesh).text = 
 					transform.parent.GetComponent.<Photo_General>().GetDescription(name);
 					transform.parent.GetComponent.<Photo_General>().CheckIfComplete(name);
@@ -64,7 +64,7 @@ function Update () {
 				info.transform.localScale.x = 0.5;
 				
 				info = transform.parent.transform.Find("Info").gameObject;
-				info.SetActive(false);
+				info.SetActiveRecursively(false);
 				animation_number = 2;
 			}
 		break;

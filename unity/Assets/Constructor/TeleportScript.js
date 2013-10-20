@@ -49,12 +49,10 @@ function OnTriggerEnter () {
 		//запоминаем угол, на который повернута будка-получатель
 		var rt = Mathf.Round(Destination.transform.localRotation.eulerAngles.y);
 		//ручками поворачиваем камеру так, чтобы она смотрела на будку
-		//GameObject.Find("MainCamera").GetComponent.<OrbitCam>().x = rt + 180;
+		GameObject.Find("MainCamera").GetComponent.<OrbitCam>().x = rt + 180;
 		//поворачиваем персонажа так, чтобы он стоял лицом к выходу из будки
-		if (rt == 0) Player.transform.TransformDirection(new Vector3(0,0,1));
-		else if (rt == 90) Player.transform.TransformDirection(new Vector3(1,0,0));
-		else if ((rt==-90)||(rt==270)) Player.transform.TransformDirection(new Vector3(-1,0,0));
-		else Player.transform.TransformDirection(new Vector3(0,0,-1));	
+		
+		Player.transform.rotation = Quaternion.AngleAxis(rt, Player.transform.up);
 		
 		//включаем эффект, теперь у получателя								
 		Destination.transform.Find("TeleportEffect").animation.Play("TeleportEffect");
