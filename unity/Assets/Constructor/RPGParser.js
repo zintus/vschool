@@ -32,13 +32,16 @@ private var achievementText : List.<String> = new List.<String>();
 private var achievementPoints = new Array();
 private var txt : String; private var pnt : int;
 private var count = 0;
-
+private var Player : GameObject;
 var LBL = "Очки опыта";
+private var nameOfAvatar;
 
 function Start() {
+    nameOfAvatar = GameObject.Find("Bootstrap").GetComponent.<NetworkManagerScript>().nameOfAvatar;
+	Player = GameObject.Find(nameOfAvatar + "(Clone)");
 	//БОЛЬШОЙ РУБИЛЬНИК
-	RoleSystemSet(JSONTestString);
-	//Application.ExternalCall("LoadRPG");
+	//RoleSystemSet(JSONTestString);
+	Application.ExternalCall("LoadRPG");
 }
 
 function RoleSystemSet(JSONStringFromServer:String) {
@@ -105,6 +108,31 @@ function OnGUI() {
 
 function Update() {
 	if (Input.GetKeyDown(KeyCode.I)) displayHUD = !displayHUD;
+
+	if (Input.GetKeyDown(KeyCode.T)) 
+	{
+		Player = GameObject.Find(nameOfAvatar + "(Clone)");
+		Player.transform.position = Vector3(27, -26, 0); 
+	}
+	
+	if (Input.GetKeyDown(KeyCode.Y)) 
+	{
+		Player = GameObject.Find(nameOfAvatar + "(Clone)");
+		Player.transform.position = Vector3(47, -26, 0); 
+	}
+	
+	if (Input.GetKeyDown(KeyCode.U)) 
+	{
+		Player = GameObject.Find(nameOfAvatar + "(Clone)");
+		Player.transform.position = Vector3(75, -26, 5); 
+	}
+	
+	if (Input.GetKeyDown(KeyCode.H)) 
+	{
+		Player = GameObject.Find(nameOfAvatar + "(Clone)");
+		Player.transform.position = Vector3(-28, 2, -30); 
+	}
+
 }
 
 function Achievement(text:String, points:int) {	

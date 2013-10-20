@@ -55,7 +55,7 @@ function ZoomIn() {
 		transform.parent.transform.Find("Menu/TextCounter").GetComponent(TextMesh).text = "";
 		
 		//БОЛЬШОЙ РУБИЛЬНИК
-		CourseDisplay(JSONTestString);
+		//CourseDisplay(JSONTestString);
 		Application.ExternalCall("LoadCoursesList");
 		
 	} else {
