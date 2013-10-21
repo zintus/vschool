@@ -52,7 +52,7 @@ function generateLecture (lecture : ThemeContent, theme_num1 : int, lec_num1 : i
 			transform.Find("4/StandGroup/BackButton").gameObject.active = false;
 			
 			transform.Find("4/StandGroup/Stand").GetComponent.<ParagraphList>().enabled = false;
-			transform.Find("4/StandGroup/P1").GetComponent(TextMesh).text = "Why so empty?";
+			//transform.Find("4/StandGroup/P1").GetComponent(TextMesh).text = "Why so empty?";
 		break;
 		case 1:
 			//если параграф один, то действуем аналогично, только вместо дежурной надписи будет полноценный параграф

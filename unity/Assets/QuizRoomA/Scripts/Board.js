@@ -26,7 +26,7 @@ function generateTest(test: ThemeContent, theme_num1 : int, test_num1 : int) {
 	if (test.questions.Count == 0) {
 		//если вопросов нет, то превращаем кнопку в обычную надпись, т.к.
 		//рассчитаны на присутствие хотя бы одного полноценного вопроса
-		transform.parent.transform.parent.transform.Find("Board Begin/Button").GetComponent(TextMesh).text = "Why so empty?";
+		//transform.parent.transform.parent.transform.Find("Board Begin/Button").GetComponent(TextMesh).text = "Why so empty?";
 		Destroy(transform.parent.transform.parent.transform.Find("Board Begin/Button").GetComponent(BoxCollider));		
 	}
 	else {

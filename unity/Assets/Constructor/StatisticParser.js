@@ -70,8 +70,8 @@ var scr : BootstrapParser;
 var lng : Languages;
 
 function StatisticDisplay (JSONStringFromServer : String) {
-	//var reader = new JsonFx.Json.JsonReader();
-	//STAT = reader.Read.<CourseRun>(JSONStringFromServer);
+//	var reader = new JsonFx.Json.JsonReader();
+//	STAT = reader.Read.<CourseRun>(JSONStringFromServer);
 	STAT = JsonFx.Json.JsonReader.Deserialize.<CourseRun>(JSONStringFromServer);
 	
 	scr = GetComponent.<BootstrapParser>();
