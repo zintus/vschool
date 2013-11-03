@@ -10,7 +10,6 @@ public class NetworkManagerScript : MonoBehaviour {
 	//avatars
 	public GameObject Joan;
 	public GameObject Robot;
-	public GameObject Golem;
 	public GameObject Alexis;
 	public GameObject Mia;
 	public GameObject Justin;
@@ -39,7 +38,6 @@ public class NetworkManagerScript : MonoBehaviour {
 			case "Robot": avatar = Robot; break;
 			case "Joan": avatar = Joan; break;
 			case "Alexis": avatar = Alexis; break;
-			case "Golem": avatar = Golem; break;
 			case "Justin": avatar = Justin; break;
 			case "Vincent": avatar = Vincent; break;
 			case "Solder": avatar = Solder; break;
